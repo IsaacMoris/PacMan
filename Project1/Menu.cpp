@@ -5,7 +5,7 @@ Menu::Menu(float width, float height)
 {
 
 
-	if (!font.loadFromFile("arial.ttf"))
+	if (!font.loadFromFile("font/ARIAL.ttf"))
 	{
 		//handle error 
 	}

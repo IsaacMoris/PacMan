@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>
+#include "LostWin.h"
 #include "Menu.h"
 #include "setting.h"
 #include <SFML/Window.hpp>
@@ -19,6 +20,7 @@ int main()
 			inputStream >> map4[i][j];
 
 ss:
+	choose = 0;
 	RenderWindow startScreen(sf::VideoMode(1600, 900), "Pacman", Style::Close | Style::Resize);
 	Menu menu(startScreen.getSize().x, startScreen.getSize().y);
 

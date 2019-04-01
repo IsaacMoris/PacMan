@@ -5,7 +5,7 @@ using namespace std;
 
 Setting::Setting(float width, float height)
 {
-	if (!font.loadFromFile("ARIAL.ttf"))
+	if (!font.loadFromFile("font/ARIAL.ttf"))
 	{
 		cout << "Error" << endl;
 
