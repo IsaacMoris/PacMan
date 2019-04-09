@@ -4,6 +4,7 @@
 #include "LostWin.h"
 #include "Menu.h"
 #include "setting.h"
+#include "ghostmoving.h"
 #include <SFML/Window.hpp>
 using namespace sf;
 using namespace std;
@@ -149,28 +150,58 @@ ss:
 
 	if (choose == 1) 
 	{
+		
 		RenderWindow pacman(VideoMode(1600, 900), "Pacman");
 		Texture player;
 		player.loadFromFile("img/pac.png");
 		Sprite player_s(player);
 		player_s.setPosition(Vector2f(32, 32));
-		player_s.setTextureRect(sf::IntRect(0, 4, 28, 28));
+		player_s.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
 		Texture wall;
 		wall.loadFromFile("img/wall.png");
 		Sprite wall_s(wall);
 
+		Texture g;
+		g.loadFromFile("img/G.png");
+		Sprite ghost(g);
+		ghost.setPosition(Vector2f(448, 448));
+		ghost.setTextureRect(sf::IntRect(0, 0, 28, 28));
 
+		ghostmoving obj(map4,cols,rows);
+		int xx = 0, yy = 0;
+		pacman.setFramerateLimit(50);
+		int xxx = 0, yyy = 0;
 		while (pacman.isOpen())
 		{
+			//sf::sleep(sf::milliseconds(80));
 			Event event;
 			while (pacman.pollEvent(event))
 			{
 				if (event.type == Event::Closed)
 					pacman.close();
+				if (Keyboard::isKeyPressed(Keyboard::Right))
+					xx = 4 , yy=0;
+				if (Keyboard::isKeyPressed(Keyboard::Left))
+					xx = -4 , yy=0;
+				if (Keyboard::isKeyPressed(Keyboard::Up))
+					yy = -4 , xx=0;
+				if (Keyboard::isKeyPressed(Keyboard::Down))
+					yy = 4 , xx=0;
 			}
+			
+		/*	int y = (player_s.getPosition().x+xx) / 32;
+			int x = (player_s.getPosition().y+yy) / 32;
+
+			if(map4[x][y]!=1)*/
+				player_s.move(xx, yy);
 
 			pacman.clear();
+
+			
+			obj.findpath(player_s,ghost,xxx,yyy);
+			ghost.move(xxx, yyy);
+
 			for (int i = 0; i < rows; i++)
 				for (int j = 0; j < cols; j++)
 				{
@@ -179,14 +210,13 @@ ss:
 						wall_s.setTextureRect(IntRect(0, 0, 32, 32));
 						wall_s.setPosition(j * 32, i * 32);
 						pacman.draw(wall_s);
-
 						if (player_s.getGlobalBounds().intersects(wall_s.getGlobalBounds()))
 						{
-
+							player_s.move(-xx, -yy);
 						}
 					}
 				}
-
+			pacman.draw(ghost);
 			pacman.draw(player_s);
 			pacman.display();
 		}

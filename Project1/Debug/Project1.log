@@ -1,16 +1,17 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  LostWin.cpp
   Source.cpp
-c:\users\isaac\onedrive\documents\github\pacman\project1\source.cpp(28): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+c:\users\isaac\onedrive\documents\github\pacman\project1\source.cpp(26): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-c:\users\isaac\onedrive\documents\github\pacman\project1\source.cpp(104): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+c:\users\isaac\onedrive\documents\github\pacman\project1\source.cpp(102): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-c:\users\isaac\onedrive\documents\github\pacman\project1\source.cpp(183): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
+c:\users\isaac\onedrive\documents\github\pacman\project1\source.cpp(197): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\isaac\onedrive\documents\github\pacman\project1\source.cpp(203): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\isaac\onedrive\documents\github\pacman\project1\source.cpp(211): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\isaac\onedrive\documents\github\pacman\project1\source.cpp(215): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Project1.vcxproj -> C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Debug\Pacman.exe

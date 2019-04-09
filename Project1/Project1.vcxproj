@@ -132,12 +132,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ghostmoving.cpp" />
     <ClCompile Include="LostWin.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="setting.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ghostmoving.h" />
     <ClInclude Include="LostWin.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="setting.h" />
