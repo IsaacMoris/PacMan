@@ -34,7 +34,7 @@ ss:
 	sprite.setColor(Color(255, 255, 255, 64));
 
 
-    while (startScreen.isOpen())
+	while (startScreen.isOpen())
 	{
 		Event event;
 
@@ -94,7 +94,7 @@ ss:
 		startScreen.display();
 	}
 
-	
+
 	//-----------------------Setting----------------------
 	if (choose == 2)
 	{
@@ -148,9 +148,9 @@ ss:
 	//------------------------------------------------------------------
 
 
-	if (choose == 1) 
+	if (choose == 1)
 	{
-		
+
 		RenderWindow pacman(VideoMode(1600, 900), "Pacman");
 		Texture player;
 		player.loadFromFile("img/pac.png");
@@ -168,10 +168,13 @@ ss:
 		ghost.setPosition(Vector2f(448, 448));
 		ghost.setTextureRect(sf::IntRect(0, 0, 28, 28));
 
-		ghostmoving obj(map4,cols,rows);
+		ghostmoving obj(map4, cols, rows);
 		int xx = 0, yy = 0;
-		pacman.setFramerateLimit(50);
+		pacman.setFramerateLimit(10);
 		int xxx = 0, yyy = 0;
+
+		// Besh
+		bool move_ch = 1; int Besh_x = 0, Besh_y = 0;
 		while (pacman.isOpen())
 		{
 			//sf::sleep(sf::milliseconds(80));
@@ -181,25 +184,61 @@ ss:
 				if (event.type == Event::Closed)
 					pacman.close();
 				if (Keyboard::isKeyPressed(Keyboard::Right))
-					xx = 4 , yy=0;
+					xx = 32, yy = 0;
 				if (Keyboard::isKeyPressed(Keyboard::Left))
-					xx = -4 , yy=0;
+					xx = -32, yy = 0;
 				if (Keyboard::isKeyPressed(Keyboard::Up))
-					yy = -4 , xx=0;
+					yy = -32, xx = 0;
 				if (Keyboard::isKeyPressed(Keyboard::Down))
-					yy = 4 , xx=0;
+					yy = 32, xx = 0;
+				//Besh
+				if (move_ch)
+				{
+					Besh_x = xx;
+					Besh_y = yy;
+					move_ch = 0;
+				}
 			}
-			
-		/*	int y = (player_s.getPosition().x+xx) / 32;
-			int x = (player_s.getPosition().y+yy) / 32;
 
-			if(map4[x][y]!=1)*/
-				player_s.move(xx, yy);
+			int y = (player_s.getPosition().x + xx) / 32;
+			int x = (player_s.getPosition().y + yy) / 32;
 
+			int Besh_gety = (player_s.getPosition().x + Besh_x) / 32;
+			int Besh_getx = (player_s.getPosition().y + Besh_y) / 32;
+
+			if (map4[x][y] != 1)
+				player_s.move(xx, yy), Besh_x = xx, Besh_y = yy;
+
+
+			else if (map4[Besh_getx][Besh_gety] != 1)
+			{
+				//Besh_x = 0; Besh_y = 0;
+				player_s.move(Besh_x, Besh_y);
+				//	continue;
+			}
+
+			else
+			{
+				/*
+				if (xx == 32)
+				xx = -32;
+
+				else if (xx == -32)
+				xx = 32;
+
+				else if (yy == 32)
+				yy = -32;
+
+				else if (yy == -32)
+				yy = -32;
+				*/
+				player_s.move(0, 0);
+				xx = yy = 0;
+			}
 			pacman.clear();
 
-			
-			obj.findpath(player_s,ghost,xxx,yyy);
+
+			obj.findpath(player_s, ghost, xxx, yyy);
 			ghost.move(xxx, yyy);
 
 			for (int i = 0; i < rows; i++)
@@ -212,7 +251,7 @@ ss:
 						pacman.draw(wall_s);
 						if (player_s.getGlobalBounds().intersects(wall_s.getGlobalBounds()))
 						{
-							player_s.move(-xx, -yy);
+							//player_s.move(-xx, -yy);
 						}
 					}
 				}
