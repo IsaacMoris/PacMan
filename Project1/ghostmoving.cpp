@@ -34,7 +34,8 @@ ghostmoving::ghostmoving(int arr[][50] , int a , int b)
 			}
 		}
 	}
-
+	/*edge[13 * 28].push_back(13 * 28 + 27);
+	edge[13 * 28 + 27].push_back(13 * 28);*/
 }
 
 void ghostmoving::intialize()
@@ -47,19 +48,21 @@ void ghostmoving::intialize()
 }
 
 
-void ghostmoving::findpath(Sprite player, Sprite ghost , int &xx , int &yy)
+Sprite ghostmoving::findpath(Sprite player, Sprite ghost)
 {
 	int y = player.getPosition().x / 32;
 	int x = player.getPosition().y / 32;
 	int from = x * width + y;
 
 	y = ghost.getPosition().x / 32; 
-	if (xx < 0)
-		y = ceil(ghost.getPosition().x / 32.0);
 	x = ghost.getPosition().y / 32;
-	if (yy < 0)
-		x = ceil(ghost.getPosition().y / 32.0);
 	int to = x * width + y;
+
+
+/*	if (xx < 0)
+		y = ceil(ghost.getPosition().x / 32.0);
+	if (yy < 0)
+		x = ceil(ghost.getPosition().y / 32.0);*/
 
 	intialize();
 	int node = from;
@@ -81,16 +84,33 @@ void ghostmoving::findpath(Sprite player, Sprite ghost , int &xx , int &yy)
 			}
 		}
 	}
-	if (path[to] != 0) {
-		int x = path[to];
-		int d = x - to;
-		if (d == 1)
-			xx = 2, yy = 0;
-		else if (d == -1)
-			xx = -2, yy = 0;
-		else if (d == width)
-			xx = 0, yy = 2;
-		else
-			xx = 0, yy = -2;
+
+	int aa = ghost.getPosition().x, bb = ghost.getPosition().y;
+
+	if (player.getPosition().x == ghost.getPosition().x && player.getPosition().y== ghost.getPosition().y)
+		xx = 0, yy = 0;
+	else
+	{
+		if (path[to] != 0 && (aa / 32 * 32 == aa) && (bb / 32 * 32 == bb)) 
+		{
+			int x = path[to];
+			int d = x - to;
+
+			if (d == 1)
+				xx = 16, yy = 0;
+			else if (d == -1)
+				xx = -16, yy = 0;
+			else if (d == width)
+				xx = 0, yy = 16;
+			else
+				xx = 0, yy = -16;
+		}
 	}
+	ghost.setPosition(ghost.getPosition().x + xx, ghost.getPosition().y + yy);
+
+	/*if (ghost.getPosition().x <= 0)
+		ghost.setPosition(896, ghost.getPosition().y);
+	if (ghost.getPosition().x >= 896)
+		ghost.setPosition(0, ghost.getPosition().y);*/
+	return ghost;
 }
