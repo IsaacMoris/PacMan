@@ -13,11 +13,23 @@ int maze1[50][50];
 
 int const rows = 28;
 int const cols = 28;
-int choose;
+int Dir=0 ,cnt=0 , fright=0;
 Texture backGround      , pac      , wall      , blinky      ,dot         , bigdot;
 Sprite  backGroundsprite, pacSprite, wallSprite, blinkySprite, dotSprite, bigdotSprite;
 
 void declare();
+void det(int x, int y)
+{
+	if (x == 32)
+		Dir = 0;
+	if (x == -32)
+		Dir = 2;
+	if (y == 32)
+		Dir = 1;
+	if (y == -32)
+		Dir = 3;
+}
+void playeranimation(int dir , int cnt);
 void settingfn();
 void startfn();
 void gamefn();
@@ -27,6 +39,11 @@ int main()
 	startfn();
 }
 
+void playeranimation(int dir,int cnt)
+{
+	//pacSprite.setTexture(pac);
+	pacSprite.setTextureRect(IntRect(cnt*32,dir*32,32,32));
+}
 void declare()
 {
 	fstream inputStream;
@@ -48,7 +65,7 @@ void declare()
 	bigdot.loadFromFile("img/bigdot.png");
 	bigdotSprite.setTexture(bigdot);
 
-	pac.loadFromFile("img/pac.png");                                 // PacmMan
+	pac.loadFromFile("img/sheet.png");                                 // PacmMan
 	pacSprite.setTexture(pac);
 	pacSprite.setPosition(Vector2f(32, 32));
 	pacSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
@@ -171,7 +188,6 @@ void settingfn()
 				}
 				break;
 			case sf::Event::Closed:
-				choose = 0;
 				settingScreen.close();
 				break;
 			}
@@ -197,6 +213,7 @@ void gamefn()
 
 	while (pacman.isOpen())
 	{
+		cnt = (cnt + 1) % 7;
 		//sf::sleep(sf::milliseconds(80));
 		Event event;
 		while (pacman.pollEvent(event))
@@ -204,13 +221,13 @@ void gamefn()
 			if (event.type == Event::Closed)
 				pacman.close();
 			if (Keyboard::isKeyPressed(Keyboard::Right))
-				xx = 32, yy = 0;
+				xx = 32,  yy = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Left))
 				xx = -32, yy = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Up))
 				yy = -32, xx = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Down))
-				yy = 32, xx = 0;
+				yy =  32, xx = 0;
 			//Besh
 			if (move_ch)
 			{
@@ -219,7 +236,7 @@ void gamefn()
 				move_ch = 0;
 			}
 		}
-
+		playeranimation(Dir,cnt);
 		if (pacSprite.getPosition().x < 0)
 			pacSprite.setPosition(896, pacSprite.getPosition().y);
 		if (pacSprite.getPosition().x > 896)
@@ -231,8 +248,10 @@ void gamefn()
 		int Besh_gety = (pacSprite.getPosition().x + Besh_x) / 32;
 		int Besh_getx = (pacSprite.getPosition().y + Besh_y) / 32;
 
-		if (maze1[x][y] != 1)
+		if (maze1[x][y] != 1) {
 			pacSprite.move(xx, yy), Besh_x = xx, Besh_y = yy;
+			det(xx, yy);
+		}
 
 
 		else if (maze1[Besh_getx][Besh_gety] != 1)
@@ -240,6 +259,7 @@ void gamefn()
 			//Besh_x = 0; Besh_y = 0;
 			pacSprite.move(Besh_x, Besh_y);
 			//	continue;
+			det(Besh_x, Besh_y);
 		}
 
 		else
@@ -249,14 +269,16 @@ void gamefn()
 		}
 		pacman.clear();
 
-
-		blinkySprite = obj.findpath(pacSprite, blinkySprite);
-
+		if (fright == 0)
+			blinkySprite = obj.findpath(pacSprite, blinkySprite);
+		else
+			fright--;
 
 
 		for (int i = 0; i < rows; i++)
 			for (int j = 0; j < cols; j++)
 			{
+				int pacx = pacSprite.getPosition().x / 32, pacy = pacSprite.getPosition().y / 32;
 				if (maze1[i][j] == 1)
 				{
 					wallSprite.setTextureRect(IntRect(0, 0, 32, 32));
@@ -269,12 +291,16 @@ void gamefn()
 					dotSprite.setColor(Color::Red);
 					dotSprite.setPosition(j * 32+8, i * 32+8);
 					pacman.draw(dotSprite);
+					if (pacx == j && pacy == i)
+						maze1[i][j] = 0;
 				}
 				else if (maze1[i][j] == 3)
 				{
 					bigdotSprite.setTextureRect(IntRect(0, 0, 32, 32));
 					bigdotSprite.setPosition(j * 32, i * 32);
 					pacman.draw(bigdotSprite);
+					if (pacx == j && pacy == i)
+						maze1[i][j] = 0, fright = 10;
 				}
 
 			}
