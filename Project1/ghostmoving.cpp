@@ -97,13 +97,13 @@ Sprite ghostmoving::findpath(Sprite player, Sprite ghost)
 			int d = x - to;
 
 			if (d == 1)
-				xx = 16, yy = 0;
+				xx = 32, yy = 0;
 			else if (d == -1)
-				xx = -16, yy = 0;
+				xx = -32, yy = 0;
 			else if (d == width)
-				xx = 0, yy = 16;
+				xx = 0, yy = 32;
 			else
-				xx = 0, yy = -16;
+				xx = 0, yy = -32;
 		}
 	}
 	ghost.setPosition(ghost.getPosition().x + xx, ghost.getPosition().y + yy);

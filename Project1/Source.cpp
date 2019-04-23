@@ -17,18 +17,10 @@ int Dir=0 ,cnt=0 , fright=0;
 Texture backGround      , pac      , wall      , blinky      ,dot         , bigdot;
 Sprite  backGroundsprite, pacSprite, wallSprite, blinkySprite, dotSprite, bigdotSprite;
 
+Sound eatdot , eatbigdot;
+SoundBuffer eatdotBuffer , eatbigdotBuffer;
 void declare();
-void det(int x, int y)
-{
-	if (x == 32)
-		Dir = 0;
-	if (x == -32)
-		Dir = 2;
-	if (y == 32)
-		Dir = 1;
-	if (y == -32)
-		Dir = 3;
-}
+void detectdirection(int x, int y);
 void playeranimation(int dir , int cnt);
 void settingfn();
 void startfn();
@@ -39,11 +31,6 @@ int main()
 	startfn();
 }
 
-void playeranimation(int dir,int cnt)
-{
-	//pacSprite.setTexture(pac);
-	pacSprite.setTextureRect(IntRect(cnt*32,dir*32,32,32));
-}
 void declare()
 {
 	fstream inputStream;
@@ -59,20 +46,26 @@ void declare()
 	backGroundsprite.setColor(Color(255, 255, 255, 64));
 
 
-	dot.loadFromFile("img/dot.png");
+	dot.loadFromFile("img/dot.png");                                // dot
 	dotSprite.setTexture(dot);
 
-	bigdot.loadFromFile("img/bigdot.png");
-	bigdotSprite.setTexture(bigdot);
+	eatdot.setBuffer(eatdotBuffer);							       // dot sound
+	eatdotBuffer.loadFromFile("effects/dot.wav");
 
-	pac.loadFromFile("img/sheet.png");                                 // PacmMan
-	pacSprite.setTexture(pac);
-	pacSprite.setPosition(Vector2f(32, 32));
-	pacSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+	eatbigdot.setBuffer(eatbigdotBuffer);                               // big dot sound
+	eatbigdotBuffer.loadFromFile("effects/bigdot.wav");
+
+	bigdot.loadFromFile("img/bigdot.png");                        // big dot
+	bigdotSprite.setTexture(bigdot);
 
 
 	wall.loadFromFile("img/wall.png");                              // Wall
 	wallSprite.setTexture(wall);
+
+	pac.loadFromFile("img/sheet.png");                            // PacmMan
+	pacSprite.setTexture(pac);
+	pacSprite.setPosition(Vector2f(13*32, 16*32));
+	pacSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
 	blinky.loadFromFile("img/blinky.png");                          // Blinky
 	blinkySprite.setTexture(blinky);
@@ -204,17 +197,24 @@ void gamefn()
 
 	RenderWindow pacman(VideoMode(1600, 900), "Pacman");
 
+	LostWin oo;
 	ghostmoving obj(maze1, cols, rows);
 	int xx = 0, yy = 0;
 	pacman.setFramerateLimit(10);
 
+		//sf::sleep(sf::milliseconds(80));
 	// Besh
-	bool move_ch = 1; int Besh_x = 0, Besh_y = 0;
 
+	bool move_ch = 1; int Besh_x = 0, Besh_y = 0;
 	while (pacman.isOpen())
 	{
+		if (pacSprite.getGlobalBounds().intersects(blinkySprite.getGlobalBounds()));
+		{
+			//oo.soundlost();
+			oo.lost(pacman);
+			sleep(sf::milliseconds(10));
+		}
 		cnt = (cnt + 1) % 7;
-		//sf::sleep(sf::milliseconds(80));
 		Event event;
 		while (pacman.pollEvent(event))
 		{
@@ -250,7 +250,7 @@ void gamefn()
 
 		if (maze1[x][y] != 1) {
 			pacSprite.move(xx, yy), Besh_x = xx, Besh_y = yy;
-			det(xx, yy);
+			detectdirection(xx, yy);
 		}
 
 
@@ -259,7 +259,7 @@ void gamefn()
 			//Besh_x = 0; Besh_y = 0;
 			pacSprite.move(Besh_x, Besh_y);
 			//	continue;
-			det(Besh_x, Besh_y);
+			detectdirection(Besh_x, Besh_y);
 		}
 
 		else
@@ -292,15 +292,23 @@ void gamefn()
 					dotSprite.setPosition(j * 32+8, i * 32+8);
 					pacman.draw(dotSprite);
 					if (pacx == j && pacy == i)
+					{
 						maze1[i][j] = 0;
+						if(eatdot.getStatus()==Music::Status::Stopped)
+						eatdot.play();
+					}
 				}
 				else if (maze1[i][j] == 3)
 				{
 					bigdotSprite.setTextureRect(IntRect(0, 0, 32, 32));
 					bigdotSprite.setPosition(j * 32, i * 32);
 					pacman.draw(bigdotSprite);
-					if (pacx == j && pacy == i)
+					if (pacx == j && pacy == i) 
+					{
 						maze1[i][j] = 0, fright = 10;
+						if (eatbigdot.getStatus() == Music::Status::Stopped)
+							eatbigdot.play();
+					}
 				}
 
 			}
@@ -308,4 +316,20 @@ void gamefn()
 		pacman.draw(pacSprite);
 		pacman.display();
 	}
+}
+void playeranimation(int dir, int cnt)
+{
+	pacSprite.setTextureRect(IntRect(cnt * 32, dir * 32, 32, 32));
+}
+
+void detectdirection(int x, int y)
+{
+	if (x == 32)
+		Dir = 0;
+	if (x == -32)
+		Dir = 2;
+	if (y == 32)
+		Dir = 1;
+	if (y == -32)
+		Dir = 3;
 }
