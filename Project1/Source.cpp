@@ -4,6 +4,8 @@
 #include "Menu.h"
 #include "setting.h"
 #include "ghostmoving.h"
+#include "ShortestRandom.h"
+#include "pinky.h"
 #include "LostWin.h"
 #include <SFML/Window.hpp>
 using namespace sf;
@@ -13,15 +15,17 @@ int maze1[50][50];
 
 int const rows = 28;
 int const cols = 28;
-int Dir=0 ,cnt=0 , fright=0;
-Texture backGround      , pac      , wall      , blinky      ,dot         , bigdot;
-Sprite  backGroundsprite, pacSprite, wallSprite, blinkySprite, dotSprite, bigdotSprite;
+int Dir = 0, cnt = 0, fright = 0;
+bool vary = 0;
+Texture backGround      , pac      , wall      , blinky      ,dot         , bigdot       ,pink;
+Sprite  backGroundsprite, pacSprite, wallSprite, blinkySprite, dotSprite, bigdotSprite  , pinkSprite;
 
 Sound eatdot , eatbigdot;
 SoundBuffer eatdotBuffer , eatbigdotBuffer;
 void declare();
 void detectdirection(int x, int y);
 void playeranimation(int dir , int cnt);
+
 void settingfn();
 void startfn();
 void gamefn();
@@ -72,6 +76,11 @@ void declare()
 	blinkySprite.setPosition(Vector2f(448, 448));
 	blinkySprite.setTextureRect(sf::IntRect(0, 0, 28, 28));
 
+
+	pink.loadFromFile("img/g3.png");
+	pinkSprite.setTexture(pink);									// pinky 
+	pinkSprite.setPosition(Vector2f(448, 448));
+	pinkSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 }
 
 void startfn()
@@ -192,6 +201,8 @@ void settingfn()
 	}
 }
 
+
+
 void gamefn()
 {
 
@@ -199,6 +210,7 @@ void gamefn()
 
 	LostWin oo;
 	ghostmoving obj(maze1, cols, rows);
+	ShortestRandom pn(maze1, cols, rows);
 	int xx = 0, yy = 0;
 	pacman.setFramerateLimit(10);
 
@@ -208,7 +220,7 @@ void gamefn()
 	bool move_ch = 1; int Besh_x = 0, Besh_y = 0;
 	while (pacman.isOpen())
 	{
-		if (pacSprite.getGlobalBounds().intersects(blinkySprite.getGlobalBounds()));
+		if (pacSprite.getGlobalBounds().intersects(blinkySprite.getGlobalBounds()))
 		{
 			//oo.soundlost();
 			oo.lost(pacman);
@@ -274,6 +286,7 @@ void gamefn()
 		else
 			fright--;
 
+		pn.short_with_tiles(pacSprite, pinkSprite);
 
 		for (int i = 0; i < rows; i++)
 			for (int j = 0; j < cols; j++)
@@ -294,7 +307,7 @@ void gamefn()
 					if (pacx == j && pacy == i)
 					{
 						maze1[i][j] = 0;
-						if(eatdot.getStatus()==Music::Status::Stopped)
+						if (eatdot.getStatus() == Music::Status::Stopped)
 						eatdot.play();
 					}
 				}
@@ -313,6 +326,7 @@ void gamefn()
 
 			}
 		pacman.draw(blinkySprite);
+		pacman.draw(pinkSprite);
 		pacman.draw(pacSprite);
 		pacman.display();
 	}

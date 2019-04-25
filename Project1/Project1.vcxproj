@@ -135,16 +135,20 @@
     <ClCompile Include="ghostmoving.cpp" />
     <ClCompile Include="LostWin.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="pinky.cpp" />
     <ClCompile Include="scoreboard.cpp" />
     <ClCompile Include="setting.cpp" />
+    <ClCompile Include="ShortestRandom.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ghostmoving.h" />
     <ClInclude Include="LostWin.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="pinky.h" />
     <ClInclude Include="scoreboard.h" />
     <ClInclude Include="setting.h" />
+    <ClInclude Include="ShortestRandom.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

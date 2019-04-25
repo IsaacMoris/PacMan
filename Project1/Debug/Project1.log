@@ -1,44 +1,47 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(411,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Source.cpp
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(80): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(148): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(245): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+  ShortestRandom.cpp
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(47): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(54): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(246): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(55): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(248): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(58): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(249): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(59): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(252): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(260): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(281): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(72): warning C4018: '<': signed/unsigned mismatch
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(84): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(285): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(292): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(304): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(211): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(112): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(117): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(123): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\ShortestRandom.cpp(211): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Project1.vcxproj -> C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Debug\Pacman.exe

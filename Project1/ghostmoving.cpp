@@ -63,28 +63,28 @@ Sprite ghostmoving::findpath(Sprite player, Sprite ghost)
 		y = ceil(ghost.getPosition().x / 32.0);
 	if (yy < 0)
 		x = ceil(ghost.getPosition().y / 32.0);*/
-
-	intialize();
-	int node = from;
-	dis[node] = 0;
-	queue<int> q;
-	q.push(node);
-	while (!q.empty())
-	{
-		node = q.front();
-		q.pop();
-		for (int i = 0; i < edge[node].size(); i++)
+//	if (path[to] == 0) {
+		intialize();
+		int node = from;
+		dis[node] = 0;
+		queue<int> q;
+		q.push(node);
+		while (!q.empty())
 		{
-			int child = edge[node][i];
-			if (dis[child] > dis[node] + 1)
+			node = q.front();
+			q.pop();
+			for (int i = 0; i < edge[node].size(); i++)
 			{
-				path[child] = node;
-				dis[child] = dis[node] + 1;
-				q.push(child);
+				int child = edge[node][i];
+				if (dis[child] > dis[node] + 1)
+				{
+					path[child] = node;
+					dis[child] = dis[node] + 1;
+					q.push(child);
+				}
 			}
 		}
-	}
-
+//	}
 	int aa = ghost.getPosition().x, bb = ghost.getPosition().y;
 
 	if (player.getPosition().x == ghost.getPosition().x && player.getPosition().y== ghost.getPosition().y)
@@ -97,13 +97,13 @@ Sprite ghostmoving::findpath(Sprite player, Sprite ghost)
 			int d = x - to;
 
 			if (d == 1)
-				xx = 32, yy = 0;
+				xx = 16, yy = 0;
 			else if (d == -1)
-				xx = -32, yy = 0;
+				xx = -16, yy = 0;
 			else if (d == width)
-				xx = 0, yy = 32;
+				xx = 0, yy = 16;
 			else
-				xx = 0, yy = -32;
+				xx = 0, yy = -16;
 		}
 	}
 	ghost.setPosition(ghost.getPosition().x + xx, ghost.getPosition().y + yy);

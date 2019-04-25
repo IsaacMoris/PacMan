@@ -109,5 +109,3 @@ void scoreboard::Print_Score_Board(RenderWindow& window)
 	}
 
 }
-
-
