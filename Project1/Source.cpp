@@ -8,27 +8,37 @@
 #include "pinky.h"
 #include "LostWin.h"
 #include <SFML/Window.hpp>
+#include <string>
 using namespace sf;
 using namespace std;
 
 int maze1[50][50];
 
+int score = 0;//Abnb
+int lives = 3;//Abnb
+bool mood = false;   //Mood --> Chase
+bool Abnb_check1 = false;
+bool Abnb_check2 = false;
+
 int const rows = 28;
 int const cols = 28;
 int Dir = 0, cnt = 0, fright = 0;
 bool vary = 0;
-Texture backGround      , pac      , wall      , blinky      ,dot         , bigdot       ,pink;
-Sprite  backGroundsprite, pacSprite, wallSprite, blinkySprite, dotSprite, bigdotSprite  , pinkSprite;
+Texture backGround, pac, wall, blinky, dot, bigdot, pink;
+Sprite  backGroundsprite, pacSprite, wallSprite, blinkySprite, dotSprite, bigdotSprite, pinkSprite;
 
-Sound eatdot , eatbigdot;
-SoundBuffer eatdotBuffer , eatbigdotBuffer;
+Texture backgr, lives_pacman1, lives_pacman2, lives_pacman3, lives_pacman4, lives_pacman5, inky, clyde;
+Sprite  backgr_score, lives_pacman_sprite1, lives_pacman_sprite2, lives_pacman_sprite3, lives_pacman_sprite4, lives_pacman_sprite5, inkySprite, clydeSprite;
+
+Sound eatdot, eatbigdot;
+SoundBuffer eatdotBuffer, eatbigdotBuffer;
 void declare();
 void detectdirection(int x, int y);
-void playeranimation(int dir , int cnt);
-
+void playeranimation(int dir, int cnt);
+int pac_diffPOS(int curr_pac_speed, int pacman_speed);
 void settingfn();
 void startfn();
-void gamefn();
+void gamefn(int pacman_speed);
 int main()
 {
 	declare();
@@ -38,7 +48,7 @@ int main()
 void declare()
 {
 	fstream inputStream;
-	inputStream.open("maps/map4.txt");
+	inputStream.open("maps/map1.txt");
 	for (int i = 0; i < rows; i++)
 		for (int j = 0; j < cols; j++)
 			inputStream >> maze1[i][j];
@@ -48,6 +58,13 @@ void declare()
 	backGroundsprite.setTexture(backGround);
 	backGroundsprite.setTextureRect(IntRect(0, 0, 1600, 900));
 	backGroundsprite.setColor(Color(255, 255, 255, 64));
+
+
+
+	backgr.loadFromFile("img/Back__Score.png");              // BackGround for score that exist in the right part of window 
+	backgr_score.setTexture(backgr);
+	backgr_score.setColor(Color(255, 255, 255, 64));
+	backgr_score.setPosition(Vector2f(896, 0));
 
 
 	dot.loadFromFile("img/dot.png");                                // dot
@@ -68,7 +85,7 @@ void declare()
 
 	pac.loadFromFile("img/sheet.png");                            // PacmMan
 	pacSprite.setTexture(pac);
-	pacSprite.setPosition(Vector2f(13*32, 16*32));
+	pacSprite.setPosition(Vector2f(32, 32));
 	pacSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
 	blinky.loadFromFile("img/blinky.png");                          // Blinky
@@ -79,8 +96,18 @@ void declare()
 
 	pink.loadFromFile("img/g3.png");
 	pinkSprite.setTexture(pink);									// pinky 
-	pinkSprite.setPosition(Vector2f(448, 448));
+	pinkSprite.setPosition(Vector2f(480, 448));
 	pinkSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
+	inky.loadFromFile("img/g1.png");
+	inkySprite.setTexture(inky);									// inky 
+	inkySprite.setPosition(Vector2f(512, 448));
+	inkySprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
+	clyde.loadFromFile("img/g4.png");
+	clydeSprite.setTexture(clyde);									// clyde
+	clydeSprite.setPosition(Vector2f(416, 448));
+	clydeSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 }
 
 void startfn()
@@ -117,10 +144,10 @@ void startfn()
 					{
 					case 0:                        // start game
 						startScreen.close();
-						gamefn();
+						gamefn(2);
 						break;
 
-					case 1:                  
+					case 1:
 						startScreen.close();      // open setting
 						settingfn();
 						break;
@@ -201,45 +228,124 @@ void settingfn()
 	}
 }
 
+int pac_diffPOS(int curr_pac_speed, int pacman_speed)
+{
+	int diff = 0;
+	if (curr_pac_speed > 0)  diff = 32 - pacman_speed; else if (curr_pac_speed < 0)  diff = -32 + pacman_speed; else diff = 0;
+	return diff;
+}
 
-
-void gamefn()
+void gamefn(int pacman_speed)
 {
 
 	RenderWindow pacman(VideoMode(1600, 900), "Pacman");
 
-	LostWin oo;
-	ghostmoving obj(maze1, cols, rows);
-	ShortestRandom pn(maze1, cols, rows);
-	int xx = 0, yy = 0;
-	pacman.setFramerateLimit(10);
 
-		//sf::sleep(sf::milliseconds(80));
+	LostWin oo;
+	ghostmoving obj(maze1, cols, rows, 2);
+	ShortestRandom pn(maze1, cols, rows, 2);
+	int xx = 0, yy = 0;
+
 	// Besh
 
 	bool move_ch = 1; int Besh_x = 0, Besh_y = 0;
 	while (pacman.isOpen())
 	{
+		//Abnb
+
 		if (pacSprite.getGlobalBounds().intersects(blinkySprite.getGlobalBounds()))
 		{
-			//oo.soundlost();
-			oo.lost(pacman);
-			sleep(sf::milliseconds(10));
+			if (!mood)      //Mood --> Chase  
+				lives--;
+
 		}
+		if (pacSprite.getGlobalBounds().intersects(pinkSprite.getGlobalBounds()))
+		{
+			if (!mood)     //Mood --> Chase 
+				lives--;
+
+		}
+		if (pacSprite.getGlobalBounds().intersects(inkySprite.getGlobalBounds()))
+		{
+			if (!mood)      //Mood --> Chase 
+				lives--;
+
+		}
+		if (pacSprite.getGlobalBounds().intersects(clydeSprite.getGlobalBounds()))
+		{
+			if (!mood)      //Mood --> Chase 
+				lives--;
+
+		}
+
 		cnt = (cnt + 1) % 7;
+
+		///////////////////////////////////////// The Right part of the window 
+		string s = to_string(score);
+		Text  text_score;
+		Text  text;
+		Font font;
+		if (!font.loadFromFile("Font//arial.ttf"))
+			cout << "Error" << endl;
+		text_score.setFont(font);
+		text_score.setPosition(1056, 128);
+		text_score.setFillColor(Color::White);
+		text_score.setStyle(Text::Bold);
+		text_score.setString("Score : ");  //To print word "Score"
+
+		text.setFont(font);
+		text.setPosition(1312, 128); //1248
+		text.setFillColor(Color::Blue);
+		text.setStyle(Text::Bold);
+		text.setString(s);                 //To print the score 
+
+
+	//------------------------------------------------------ lives --------
+
+		lives_pacman1.loadFromFile("img/live.png");
+		lives_pacman_sprite1.setTexture(lives_pacman1);
+		lives_pacman_sprite1.setColor(Color::Yellow);
+		lives_pacman_sprite1.setPosition(Vector2f(864 + 64, 288));
+		lives_pacman_sprite1.setTextureRect(sf::IntRect(0, 0, 64, 64));
+
+		lives_pacman2.loadFromFile("img/live.png");
+		lives_pacman_sprite2.setTexture(lives_pacman2);
+		lives_pacman_sprite2.setColor(Color::Yellow);
+		lives_pacman_sprite2.setPosition(Vector2f(864 + 64 * 2, 288));
+		lives_pacman_sprite2.setTextureRect(sf::IntRect(0, 0, 64, 64));
+
+		lives_pacman3.loadFromFile("img/live.png");
+		lives_pacman_sprite3.setTexture(lives_pacman3);
+		lives_pacman_sprite3.setColor(Color::Yellow);
+		lives_pacman_sprite3.setPosition(Vector2f(864 + 64 * 3, 288));
+		lives_pacman_sprite3.setTextureRect(sf::IntRect(0, 0, 64, 64));
+
+		lives_pacman4.loadFromFile("img/live.png");
+		lives_pacman_sprite4.setTexture(lives_pacman4);
+		lives_pacman_sprite4.setColor(Color::Yellow);
+		lives_pacman_sprite4.setPosition(Vector2f(864 + 64 * 4, 288));
+		lives_pacman_sprite4.setTextureRect(sf::IntRect(0, 0, 64, 64));
+
+		lives_pacman5.loadFromFile("img/live.png");
+		lives_pacman_sprite5.setTexture(lives_pacman5);
+		lives_pacman_sprite5.setColor(Color::Yellow);
+		lives_pacman_sprite5.setPosition(Vector2f(864 + 64 * 5, 288));
+		lives_pacman_sprite5.setTextureRect(sf::IntRect(0, 0, 64, 64));
+		///////////////////////////////////////////////////////////////////
+
 		Event event;
 		while (pacman.pollEvent(event))
 		{
 			if (event.type == Event::Closed)
 				pacman.close();
 			if (Keyboard::isKeyPressed(Keyboard::Right))
-				xx = 32,  yy = 0;
+				xx = pacman_speed, yy = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Left))
-				xx = -32, yy = 0;
+				xx = -pacman_speed, yy = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Up))
-				yy = -32, xx = 0;
+				yy = -pacman_speed, xx = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Down))
-				yy =  32, xx = 0;
+				yy = pacman_speed, xx = 0;
 			//Besh
 			if (move_ch)
 			{
@@ -248,37 +354,51 @@ void gamefn()
 				move_ch = 0;
 			}
 		}
-		playeranimation(Dir,cnt);
+		playeranimation(Dir, cnt);
 		if (pacSprite.getPosition().x < 0)
 			pacSprite.setPosition(896, pacSprite.getPosition().y);
 		if (pacSprite.getPosition().x > 896)
 			pacSprite.setPosition(0, pacSprite.getPosition().y);
 
-		int y = (pacSprite.getPosition().x + xx) / 32;
-		int x = (pacSprite.getPosition().y + yy) / 32;
-
-		int Besh_gety = (pacSprite.getPosition().x + Besh_x) / 32;
-		int Besh_getx = (pacSprite.getPosition().y + Besh_y) / 32;
-
-		if (maze1[x][y] != 1) {
-			pacSprite.move(xx, yy), Besh_x = xx, Besh_y = yy;
-			detectdirection(xx, yy);
-		}
 
 
-		else if (maze1[Besh_getx][Besh_gety] != 1)
+		int y = (pacSprite.getPosition().x + xx + pac_diffPOS(xx, pacman_speed)) / 32;
+		int x = (pacSprite.getPosition().y + yy + pac_diffPOS(yy, pacman_speed)) / 32;
+
+		int Besh_gety = (pacSprite.getPosition().x + Besh_x + pac_diffPOS(Besh_x, pacman_speed)) / 32;
+		int Besh_getx = (pacSprite.getPosition().y + Besh_y + pac_diffPOS(Besh_y, pacman_speed)) / 32;
+
+		int xmod = pacSprite.getPosition().y, ymod = pacSprite.getPosition().x;
+
+
+		if (!(xmod % 32) && !(ymod % 32))
 		{
-			//Besh_x = 0; Besh_y = 0;
-			pacSprite.move(Besh_x, Besh_y);
-			//	continue;
-			detectdirection(Besh_x, Besh_y);
+
+			if (maze1[x][y] != 1) {
+				pacSprite.move(xx, yy), Besh_x = xx, Besh_y = yy;
+				detectdirection(xx, yy);
+			}
+
+
+			else if (maze1[Besh_getx][Besh_gety] != 1)
+			{
+
+				pacSprite.move(Besh_x, Besh_y);
+
+				detectdirection(Besh_x, Besh_y);
+			}
+
+			else
+			{
+				//if (!(xmod % 32) && !(ymod % 32))
+				{
+					pacSprite.move(0, 0);
+					xx = yy = 0;
+				}
+			}
 		}
 
-		else
-		{
-			pacSprite.move(0, 0);
-			xx = yy = 0;
-		}
+		else pacSprite.move(Besh_x, Besh_y);
 		pacman.clear();
 
 		if (fright == 0)
@@ -287,6 +407,9 @@ void gamefn()
 			fright--;
 
 		pn.short_with_tiles(pacSprite, pinkSprite);
+
+
+
 
 		for (int i = 0; i < rows; i++)
 			for (int j = 0; j < cols; j++)
@@ -302,13 +425,14 @@ void gamefn()
 				{
 					dotSprite.setTextureRect(IntRect(0, 0, 16, 16));
 					dotSprite.setColor(Color::Red);
-					dotSprite.setPosition(j * 32+8, i * 32+8);
+					dotSprite.setPosition(j * 32 + 8, i * 32 + 8);
 					pacman.draw(dotSprite);
 					if (pacx == j && pacy == i)
 					{
 						maze1[i][j] = 0;
+						score += 10;  //Abnb 
 						if (eatdot.getStatus() == Music::Status::Stopped)
-						eatdot.play();
+							eatdot.play();
 					}
 				}
 				else if (maze1[i][j] == 3)
@@ -316,9 +440,10 @@ void gamefn()
 					bigdotSprite.setTextureRect(IntRect(0, 0, 32, 32));
 					bigdotSprite.setPosition(j * 32, i * 32);
 					pacman.draw(bigdotSprite);
-					if (pacx == j && pacy == i) 
+					if (pacx == j && pacy == i)
 					{
 						maze1[i][j] = 0, fright = 10;
+						score += 50;  //Abnb 
 						if (eatbigdot.getStatus() == Music::Status::Stopped)
 							eatbigdot.play();
 					}
@@ -327,7 +452,22 @@ void gamefn()
 			}
 		pacman.draw(blinkySprite);
 		pacman.draw(pinkSprite);
+		pacman.draw(inkySprite);
+		pacman.draw(clydeSprite);
 		pacman.draw(pacSprite);
+		pacman.draw(backgr_score);
+		pacman.draw(text); //ok
+		pacman.draw(text_score);//ok
+		if (lives >= 1)
+			pacman.draw(lives_pacman_sprite1);
+		if (lives >= 2)
+			pacman.draw(lives_pacman_sprite2);
+		if (lives >= 3)
+			pacman.draw(lives_pacman_sprite3);
+		if (lives >= 4)
+			pacman.draw(lives_pacman_sprite4);
+		if (lives >= 5)
+			pacman.draw(lives_pacman_sprite5);
 		pacman.display();
 	}
 }
@@ -338,12 +478,12 @@ void playeranimation(int dir, int cnt)
 
 void detectdirection(int x, int y)
 {
-	if (x == 32)
+	if (x == 2)
 		Dir = 0;
-	if (x == -32)
+	if (x == -2)
 		Dir = 2;
-	if (y == 32)
+	if (y == 2)
 		Dir = 1;
-	if (y == -32)
+	if (y == -2)
 		Dir = 3;
 }

@@ -1,0 +1,82 @@
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <string>
+using namespace sf;
+using namespace std;
+bool b = true;
+Sound sound;
+	SoundBuffer buffer;
+struct elsot{
+
+
+	
+	
+	void playyelsot(string s)
+	{
+			
+sound.setBuffer(buffer);
+			if (!buffer.loadFromFile(s))
+			{
+				cout << 5;
+			}
+		
+	//if (b==true) { ????? ????? ?????? ????? :""D
+
+	if (sound.getStatus() == Music::Status::Stopped)
+			sound.play();
+			//b = false;
+	//	}
+	}
+};
+struct eltext {
+	Font font;
+	Text text;
+	void show(eltext x, RenderWindow &window, string s) {
+		//eltext x;
+		if (!x.font.loadFromFile("COOPBL.TTF")) {
+			//error;
+		}
+		x.text.setFont(x.font);
+		x.text.setString(s);
+		x.text.setCharacterSize(100);
+		x.text.setPosition(200, 270);
+		x.text.setFillColor(Color::Blue);
+		x.text.setStyle(Text::Style::Bold);
+		window.draw(x.text);
+	}
+};
+
+
+
+int main()
+{
+	int z;
+	elsot f;
+	eltext x;
+	RenderWindow window(VideoMode(800, 800), "pac_man");
+	
+	while (window.isOpen())
+	{
+		Event event;
+
+		while (window.pollEvent(event))
+			
+			if (event.type == Event::Closed)
+			{
+				window.close();
+			}
+			window.clear();
+			cin >> z;
+			if(z==5)
+			f.playyelsot("pacman_death.wav");
+
+			
+			x.show(x, window, "You Win");
+			
+			window.display();
+	}
+
+	system("pause");
+
+}

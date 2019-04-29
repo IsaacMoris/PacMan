@@ -7,8 +7,9 @@ using namespace sf;
 using namespace std;
 
 
-ShortestRandom::ShortestRandom(int arr[][50], int a, int b)
+ShortestRandom::ShortestRandom(int arr[][50], int a, int b ,int ghostspeed)
 {
+	speed = ghostspeed;
 	width = a;
 	height = b;
 	go[0] = 1;			 // right
@@ -59,6 +60,8 @@ Sprite ShortestRandom::findpath(Sprite player, Sprite ghost)
 	x = ghost.getPosition().y / 32;
 	int to = x * width + y;
 
+	int aa = ghost.getPosition().x, bb = ghost.getPosition().y;
+
 	if (path[to] == 0) {
 		intialize();
 		int node = from;
@@ -81,9 +84,10 @@ Sprite ShortestRandom::findpath(Sprite player, Sprite ghost)
 			}
 		}
 	}
-	int aa = ghost.getPosition().x, bb = ghost.getPosition().y;
+	
 
-	if (player.getPosition().x == ghost.getPosition().x && player.getPosition().y == ghost.getPosition().y)
+	if (player.getPosition().x == ghost.getPosition().x && player.getPosition().y == ghost.getPosition().y
+		&& (aa / 32 * 32 == aa) && (bb / 32 * 32 == bb))
 		ghostx = 0, ghosty = 0;
 	else
 	{
@@ -93,13 +97,13 @@ Sprite ShortestRandom::findpath(Sprite player, Sprite ghost)
 			int d = x - to;
 
 			if (d == 1)
-				ghostx = 16, ghosty = 0;
+				ghostx = speed, ghosty = 0;
 			else if (d == -1)
-				ghostx = -16, ghosty = 0;
+				ghostx = -speed, ghosty = 0;
 			else if (d == width)
-				ghostx = 0, ghosty = 16;
+				ghostx = 0, ghosty = speed;
 			else
-				ghostx = 0, ghosty = -16;
+				ghostx = 0, ghosty = -speed;
 		}
 	}
 	ghost.setPosition(ghost.getPosition().x + ghostx, ghost.getPosition().y + ghosty);
@@ -118,7 +122,7 @@ int ShortestRandom::p_y(int pos, Sprite & pink)
 }
 
 
-void ShortestRandom::pinky_ran_move(Sprite & pink, int speed)
+void ShortestRandom::pinky_ran_move(Sprite & pink)
 {
 	int xmod = pink.getPosition().y, ymod = pink.getPosition().x;
 
@@ -228,8 +232,8 @@ void ShortestRandom::short_with_tiles(Sprite pac, Sprite& ghost)
 	}
 	else
 	{
-		cout << 5;
-		pinky_ran_move(ghost, 16);
+		
+		pinky_ran_move(ghost);
 		moving_switch++;
 	}
 }

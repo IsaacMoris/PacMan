@@ -7,8 +7,9 @@ using namespace sf;
 using namespace std;
 
 
-ghostmoving::ghostmoving(int arr[][50] , int a , int b)
+ghostmoving::ghostmoving(int arr[][50] , int a , int b , int ghostspeed)
 {
+	speed = ghostspeed;
 	width = a;
 	height = b;
 	go[0] = 1;			 // right
@@ -63,7 +64,7 @@ Sprite ghostmoving::findpath(Sprite player, Sprite ghost)
 		y = ceil(ghost.getPosition().x / 32.0);
 	if (yy < 0)
 		x = ceil(ghost.getPosition().y / 32.0);*/
-//	if (path[to] == 0) {
+	if (path[to] == 0) {
 		intialize();
 		int node = from;
 		dis[node] = 0;
@@ -84,33 +85,36 @@ Sprite ghostmoving::findpath(Sprite player, Sprite ghost)
 				}
 			}
 		}
-//	}
+	}
 	int aa = ghost.getPosition().x, bb = ghost.getPosition().y;
 
-	if (player.getPosition().x == ghost.getPosition().x && player.getPosition().y== ghost.getPosition().y)
+	if (player.getPosition().x == ghost.getPosition().x && player.getPosition().y== ghost.getPosition().y
+		&& (aa / 32 * 32 == aa) && (bb / 32 * 32 == bb))
 		xx = 0, yy = 0;
 	else
 	{
+
 		if (path[to] != 0 && (aa / 32 * 32 == aa) && (bb / 32 * 32 == bb)) 
 		{
+			
 			int x = path[to];
 			int d = x - to;
 
 			if (d == 1)
-				xx = 16, yy = 0;
+				xx = speed, yy = 0;
 			else if (d == -1)
-				xx = -16, yy = 0;
+				xx = -speed, yy = 0;
 			else if (d == width)
-				xx = 0, yy = 16;
+				xx = 0, yy = speed;
 			else
-				xx = 0, yy = -16;
+				xx = 0, yy = -speed;
 		}
 	}
 	ghost.setPosition(ghost.getPosition().x + xx, ghost.getPosition().y + yy);
 
-	/*if (ghost.getPosition().x <= 0)
+	if (ghost.getPosition().x <= 0)
 		ghost.setPosition(896, ghost.getPosition().y);
 	if (ghost.getPosition().x >= 896)
-		ghost.setPosition(0, ghost.getPosition().y);*/
+		ghost.setPosition(0, ghost.getPosition().y);
 	return ghost;
 }

@@ -6,13 +6,13 @@ using namespace std;
 class ShortestRandom
 {
 public:
-	ShortestRandom(int arr[][50], int a, int b);
+	ShortestRandom(int arr[][50], int a, int b, int ghostspeed);
 	Sprite findpath(Sprite player, Sprite ghost);
 	void intialize();
 
 
 
-	void pinky_ran_move(Sprite& pink, int speed);
+	void pinky_ran_move(Sprite& pink);
 	int p_x(int pos, Sprite& pink);
 	int p_y(int pos, Sprite& pink);
 
@@ -25,7 +25,7 @@ private:
 
 	int cn = 0, ran = 0, vary = 0;
 	int ghostx = 32, ghosty = 0;
-
+	int speed;
 	int  moving_switch = 0, moving_delay = 0;
 
 };
