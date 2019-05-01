@@ -17,13 +17,19 @@ Menu::Menu(float width, float height)
 
 	menu[1].setFont(font);
 	menu[1].setFillColor(Color::White);
-	menu[1].setString("Options");
+	menu[1].setString("Ladder Board");
 	menu[1].setPosition(sf::Vector2f(width / 2, height / (MAX_NUMBER_OF_ITEMS + 1) * 2));
+
 
 	menu[2].setFont(font);
 	menu[2].setFillColor(Color::White);
-	menu[2].setString("Exit");
+	menu[2].setString("Draw your Maze");
 	menu[2].setPosition(sf::Vector2f(width / 2, height / (MAX_NUMBER_OF_ITEMS + 1) * 3));
+
+	menu[3].setFont(font);
+	menu[3].setFillColor(Color::White);
+	menu[3].setString("Exit");
+	menu[3].setPosition(sf::Vector2f(width / 2, height / (MAX_NUMBER_OF_ITEMS + 1) * 4));
 
 	selectedItemIndex = 0;
 

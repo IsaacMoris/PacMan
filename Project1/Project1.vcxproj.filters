@@ -21,9 +21,6 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="setting.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LostWin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -33,18 +30,15 @@
     <ClCompile Include="scoreboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pinky.cpp">
+    <ClCompile Include="ShortestRandom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShortestRandom.cpp">
+    <ClCompile Include="Besh_Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="setting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LostWin.h">
@@ -56,10 +50,10 @@
     <ClInclude Include="scoreboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pinky.h">
+    <ClInclude Include="ShortestRandom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ShortestRandom.h">
+    <ClInclude Include="Besh_Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

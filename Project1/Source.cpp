@@ -2,19 +2,17 @@
 #include <iostream>
 #include <fstream>
 #include "Menu.h"
-#include "setting.h"
 #include "ghostmoving.h"
 #include "ShortestRandom.h"
 #include "scoreboard.h"
-#include "pinky.h"
+#include "Besh_Random.h"
 #include "LostWin.h"
 #include <SFML/Window.hpp>
 #include <string>
 using namespace sf;
 using namespace std;
 
-ifstream is;
-scoreboard score_board(is, "Score/Score.txt");
+scoreboard score_board;
 
 int maze1[50][50];
 
@@ -40,17 +38,20 @@ void declare();
 void detectdirection(int x, int y);
 void playeranimation(int dir, int cnt);
 int pac_diffPOS(int curr_pac_speed, int pacman_speed);
-void scoreBoardfn();
 
-void settingfn();
+void enterusernamefn();
+
 void startfn();
 void gamefn(int pacman_speed);
+void scoreBoardfn();
+void draw_your_maze();
 
 void Return_game_to_the_start() ;
 
 int main()
 {
 	declare();
+	//enterusernamefn();
 	startfn();
 }
 
@@ -94,67 +95,34 @@ void declare()
 
 	pac.loadFromFile("img/sheet.png");                            // PacmMan
 	pacSprite.setTexture(pac);
-	pacSprite.setPosition(Vector2f(32, 32));
+	pacSprite.setPosition(Vector2f(448, 704));
 	pacSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
 	blinky.loadFromFile("img/blinky.png");                          // Blinky
 	blinkySprite.setTexture(blinky);
-	blinkySprite.setPosition(Vector2f(448, 448));
+	blinkySprite.setPosition(Vector2f(384, 416));
 	blinkySprite.setTextureRect(sf::IntRect(0, 0, 28, 28));
 
 
 	pink.loadFromFile("img/g3.png");
 	pinkSprite.setTexture(pink);									// pinky 
-	pinkSprite.setPosition(Vector2f(480, 448));
+	pinkSprite.setPosition(Vector2f(416, 416));
 	pinkSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
 	inky.loadFromFile("img/g1.png");
 	inkySprite.setTexture(inky);									// inky 
-	inkySprite.setPosition(Vector2f(512, 448));
+	inkySprite.setPosition(Vector2f(448, 416));
 	inkySprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
 	clyde.loadFromFile("img/g4.png");
 	clydeSprite.setTexture(clyde);									// clyde
-	clydeSprite.setPosition(Vector2f(416, 448));
+	clydeSprite.setPosition(Vector2f(480, 416));
 	clydeSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 }
-
-/*void scoreBoardfn()
-{
-	RenderWindow Score_Screen(sf::VideoMode(1600, 900), "Score Board");
-
-	while (Score_Screen.isOpen())
-	{
-		Event event;
-		while (Score_Screen.pollEvent(event))
-		{
-			if (event.type == Event::Closed)
-				Score_Screen.close();
-
-			else if (event.text.unicode == 27) //27 Esc button
-			{
-				Score_Screen.close();
-				settingfn();
-				break;
-			}
-		}
-		Score_Screen.clear();
-		score_board.Print_Score_Board(Score_Screen);
-		//Score_Screen.display();
-	}
-}*/
 
 void startfn()
 {
 
-	/*RenderWindow username(VideoMode(1600, 900), "Enter your name");
-	while (username.isOpen())
-	{
-		Event event;
-
-		while (username.pollEvent(event)) 
-			score_board.Keyboard_Handling(event, username);
-	}*/
 	RenderWindow startScreen(sf::VideoMode(1600, 900), "Pacman", Style::Close | Style::Resize);
 	Menu menu(startScreen.getSize().x, startScreen.getSize().y);
 	while (startScreen.isOpen())
@@ -190,10 +158,15 @@ void startfn()
 
 					case 1:
 						startScreen.close();      // open setting
-						settingfn();
+						scoreBoardfn();
 						break;
 
 					case 2:
+						startScreen.close();
+						draw_your_maze();                // maze 
+						break;
+
+					case 3:
 						exit(0);                 // exit game 
 						break;
 					}
@@ -218,59 +191,6 @@ void startfn()
 	}
 
 }
-
-void settingfn()
-{
-	sf::RenderWindow settingScreen(sf::VideoMode(1600, 900), "Hello Sfml!");
-	Setting setting(settingScreen.getSize().x, settingScreen.getSize().y);
-
-	while (settingScreen.isOpen())
-	{
-		sf::Event event;
-		while (settingScreen.pollEvent(event))
-		{
-			switch (event.type)
-			{
-			case Event::KeyReleased:
-				switch (event.key.code)
-				{
-				case::Keyboard::Up:
-					setting.MoveUp();
-					break;
-				case::Keyboard::Down:
-					setting.MoveDown();
-					break;
-				case::Keyboard::Return:
-					switch (setting.GetPressedItem())
-					{
-					case 0:
-						cout << "You pressed controls" << endl;
-						break;
-					case 1:
-					//	settingScreen.close();
-						//scoreBoardfn();
-						cout << "you prssed leader board" << endl;
-						break;
-					case 2:
-						settingScreen.close();
-						startfn();
-						break;
-					}
-					break;
-				}
-				break;
-			case sf::Event::Closed:
-				settingScreen.close();
-				break;
-			}
-		}
-		settingScreen.clear();
-		settingScreen.draw(backGroundsprite);
-		setting.draw(settingScreen);
-		settingScreen.display();
-	}
-}
-
 int pac_diffPOS(int curr_pac_speed, int pacman_speed)
 {
 	int diff = 0;
@@ -283,13 +203,14 @@ int pac_diffPOS(int curr_pac_speed, int pacman_speed)
 
 void gamefn(int pacman_speed)
 {
-
+	 Return_game_to_the_start();
 	RenderWindow pacman(VideoMode(1600, 900), "Pacman");
 
 
 	LostWin oo;
-	ghostmoving obj(maze1, cols, rows, 2);
-	ShortestRandom pn(maze1, cols, rows, 2);
+	ghostmoving blinky(maze1, cols, rows, 2);
+	ShortestRandom pinky(maze1, cols, rows, 2);
+	Besh_Random inky, clyde;
 	int xx = 0, yy = 0;
 
 	// Besh
@@ -298,7 +219,6 @@ void gamefn(int pacman_speed)
 	while (pacman.isOpen())
 	{
 		//Abnb
-
 		if (pacSprite.getGlobalBounds().intersects(blinkySprite.getGlobalBounds()))
 		{
 			if (!mood)      //Mood --> Chase  
@@ -401,6 +321,11 @@ void gamefn(int pacman_speed)
 				yy = -pacman_speed, xx = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Down))
 				yy = pacman_speed, xx = 0;
+			if (Keyboard::isKeyPressed(Keyboard::Escape))
+			{
+				pacman.close();
+				startfn();
+			}
 			//Besh
 			if (move_ch)
 			{
@@ -457,14 +382,13 @@ void gamefn(int pacman_speed)
 		pacman.clear();
 
 		if (fright == 0)
-			blinkySprite = obj.findpath(pacSprite, blinkySprite);
+			blinkySprite = blinky.findpath(pacSprite, blinkySprite);
 		else
 			fright--;
 
-		pn.short_with_tiles(pacSprite, pinkSprite);
-
-
-
+		pinky.short_with_tiles(pacSprite, pinkSprite);
+		inky.pinky_ran_move(inkySprite, maze1, 2);
+		clyde.pinky_ran_move(clydeSprite, maze1, 2);
 
 		for (int i = 0; i < rows; i++)
 			for (int j = 0; j < cols; j++)
@@ -526,6 +450,134 @@ void gamefn(int pacman_speed)
 		pacman.display();
 	}
 }
+
+void scoreBoardfn()
+{
+	RenderWindow Score_Screen(sf::VideoMode(1600, 900), "Score Board");
+
+	while (Score_Screen.isOpen())
+	{
+		Event event;
+		while (Score_Screen.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				Score_Screen.close();
+
+			else if (event.text.unicode == 27) //27 Esc button
+			{
+				Score_Screen.close();
+				startfn();
+				break;
+			}
+		}
+		Score_Screen.clear();
+		score_board.Print_Score_Board(Score_Screen);
+		Score_Screen.display();
+	}
+}
+void draw_your_maze()
+{
+	Return_game_to_the_start();
+	sf::RenderWindow window(sf::VideoMode(1600, 900), "Draw Your Maze");
+
+	int drawmaze[50][50] = {};
+	fstream inputStream;
+	inputStream.open("maps/drawurmaze.txt");
+	for (int i = 0; i < rows; i++)
+		for (int j = 0; j < cols; j++)
+			inputStream >> drawmaze[i][j];
+
+	Texture textur;
+	textur.loadFromFile("img/drawurmaze.png");
+	Sprite sprite(textur);
+	sprite.setPosition(896, 0);
+
+
+	//--------------------------//
+
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+			if (Keyboard::isKeyPressed(Keyboard::P))
+			{
+				ofstream outfile;
+				outfile.open("filename.txt", ios::out);
+				outfile.clear();
+				for (int i = 0; i < rows; i++) {
+					for (int j = 0; j < cols; j++)
+						outfile << drawmaze[i][j] << " ";
+					outfile << "\n";
+				}
+				outfile.close();
+				cout << "done";
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Escape))
+			{
+				window.close();
+				startfn();
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Enter))
+			{
+				for (int i = 0; i < rows; i++)
+					for (int j = 0; j < cols; j++)
+						maze1[i][j] = drawmaze[i][j];
+				window.close();
+				startfn();
+			}
+		}
+
+		int b = Mouse::getPosition(window).x / 32, a = Mouse::getPosition(window).y / 32;
+		if (drawmaze[a][b] != 4 && drawmaze[a][b] != 6 && a != 0 && b != 0 && a != 27 && b != 27)
+		{
+			if (Keyboard::isKeyPressed(Keyboard::D))
+				drawmaze[a][b] = 2;
+			else if (Keyboard::isKeyPressed(Keyboard::B))
+				drawmaze[a][b] = 3;
+			else if (Keyboard::isKeyPressed(Keyboard::W))
+				drawmaze[a][b] = 1;
+			else if (Keyboard::isKeyPressed(Keyboard::S))
+				drawmaze[a][b] = 0;
+		}
+		window.clear();
+		for (int i = 0; i < rows; i++)
+			for (int j = 0; j < cols; j++)
+			{
+
+				if (drawmaze[i][j] == 1)
+				{
+					wallSprite.setTextureRect(IntRect(0, 0, 32, 32));
+					wallSprite.setPosition(j * 32, i * 32);
+					window.draw(wallSprite);
+				}
+				else if (drawmaze[i][j] == 2)
+				{
+					dotSprite.setTextureRect(IntRect(0, 0, 16, 16));
+					dotSprite.setColor(Color::Red);
+					dotSprite.setPosition(j * 32 + 8, i * 32 + 8);
+					window.draw(dotSprite);
+				}
+				else if (drawmaze[i][j] == 3)
+				{
+					bigdotSprite.setTextureRect(IntRect(0, 0, 32, 32));
+					bigdotSprite.setPosition(j * 32, i * 32);
+					window.draw(bigdotSprite);
+				}
+			}
+
+
+		window.draw(blinkySprite);
+		window.draw(pinkSprite);
+		window.draw(inkySprite);
+		window.draw(clydeSprite);
+		window.draw(pacSprite);
+		window.draw(sprite);
+		window.display();
+	}
+}
 void playeranimation(int dir, int cnt)
 {
 	pacSprite.setTextureRect(IntRect(cnt * 32, dir * 32, 32, 32));
@@ -544,13 +596,27 @@ void detectdirection(int x, int y)
 }
 void Return_game_to_the_start()
 {
-	pacSprite.setPosition(Vector2f(32, 32));
+	pacSprite.setPosition(Vector2f(448, 704));
 
-	blinkySprite.setPosition(Vector2f(448, 448));
-	pinkSprite.setPosition(Vector2f(480, 448));								
-	inkySprite.setPosition(Vector2f(512, 448));
-	clydeSprite.setPosition(Vector2f(416, 448));
+
+	blinkySprite.setPosition(Vector2f(384, 416));
+
+	pinkSprite.setPosition(Vector2f(416, 416));
+	
+	inkySprite.setPosition(Vector2f(448, 416));
+	
+	clydeSprite.setPosition(Vector2f(480, 416));
 	
 	sleep(seconds(1)); 
 
+}
+void enterusernamefn()
+{
+	RenderWindow username(VideoMode(1600, 900), "Enter your name");
+	while (username.isOpen())
+	{
+		Event event;
+		while (username.pollEvent(event))
+			score_board.Keyboard_Handling(event, username);
+	}
 }

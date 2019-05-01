@@ -6,31 +6,31 @@
 #include <stdlib.h>
 #include <string>
 #include <algorithm>
+#include <fstream>
 #include <functional>   // std::greater
 using namespace std;
 using namespace sf;
 
 
-scoreboard::scoreboard(ifstream& st , string path)
+scoreboard::scoreboard()
 {
-
+	scoreIn.open("Score/Score.txt");
+	
 	//--------- Read score from file --------------------//
-	file_path = path;
-	st.open(path);
-	if (st.fail())
+	if (scoreIn.fail())
 	{
 		cerr << "Error while opening ifstream\n";
 		exit(1);
 	}
 
-	while (!st.eof())
+	while (!scoreIn.eof())
 	{
 		pair<string, int > name_and_score;
-		st >> name_and_score.first >> name_and_score.second;
+		scoreIn >> name_and_score.first >> name_and_score.second;
 		Score[name_and_score.first] = name_and_score.second;
 
 	}
-	st.close();
+	scoreIn.close();
 
 	//----------------- sort score ascending order ---------------//
 
@@ -43,8 +43,6 @@ scoreboard::scoreboard(ifstream& st , string path)
 	}
 
 	sort(Sorted_Score, Sorted_Score + size);
-
-
 }
 
 
@@ -64,7 +62,7 @@ void scoreboard::Text_Style(Text& t, float Xposition, float Yposition, string s,
 void scoreboard::Keyboard_Handling(Event& event, RenderWindow& window)
 {
 	if (event.type == Event::Closed)
-		window.close();
+		exit(0);
 
 	if (event.type == Event::TextEntered)
 	{
@@ -76,7 +74,7 @@ void scoreboard::Keyboard_Handling(Event& event, RenderWindow& window)
 
 		else if (event.text.unicode == 13)
 		{
-			Score[sentence];
+			Score[sentence]=max(Score[sentence],0);
 			window.close();
 		}
 	}
@@ -98,6 +96,7 @@ void scoreboard::Print_Score_Board(RenderWindow& window)
 	Text_Style(Desplay_Score_Word, x, y, "Score", Color::White, 100);
 
 	x = 570.0; y = 120.0;
+	window.draw(Desplay_Score_Word);
 	for (i = size - 1; i >= 0; i--, y += 90)
 	{
 		if (Sorted_Score[i].second == "")
@@ -108,7 +107,6 @@ void scoreboard::Print_Score_Board(RenderWindow& window)
 		Text_Style(Desplay_Name, x, y, Sorted_Score[i].second, Color::Yellow, 60);
 		Text_Style(Desplay_Score, x + 250, y, convert, Color::Green, 45);
 
-		window.draw(Desplay_Score_Word);
 		window.draw(Desplay_Name);
 		window.draw(Desplay_Score);
 		//window.display();
@@ -119,14 +117,16 @@ void scoreboard::Print_Score_Board(RenderWindow& window)
 
 void scoreboard :: Save_Score_Board(int finale_score)
 {
+	scoreOut.open("Score/Score.txt");
+	Score[sentence] = max(finale_score, Score[sentence]);
 
-	if (Score[sentence] < finale_score)
-		Score[sentence] = finale_score;
-	ofstream of;
-	of.open(file_path);
-	of.clear();
+	scoreOut.clear();
 	it = Score.begin();
 	for (; it != Score.end(); it++)
-		of << it->first << " " << it->second<<endl;
-	of.close();
+	{
+		cout << it->first << " " << it->second << endl;
+		scoreOut << it->first << " " << it->second << endl;
+	}
+	scoreOut.close();
+
 }

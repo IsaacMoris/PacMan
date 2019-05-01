@@ -1,11 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <fstream>
 using namespace std;
 using namespace sf;
 class scoreboard
 {
 public:
-	scoreboard(ifstream& st, string path);
+	scoreboard();
 
 
 	void Text_Style(Text& t, float Xposition, float Yposition, string s, Color c, int font_size);
@@ -28,5 +29,10 @@ private:
 	int i = 0;
 	Text Desplay_Score_Word, Desplay_Name, Desplay_Score;
 	string convert;
-	string file_path;
+
+
+	ifstream scoreIn;
+
+	ofstream scoreOut;
+	
 };
