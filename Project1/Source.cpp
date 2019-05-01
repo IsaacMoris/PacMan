@@ -370,6 +370,8 @@ void gamefn(int pacman_speed)
 			lost.close();
 			lives = 3;
 			map_path = "maps/map1.txt";
+			score = 0;
+			total_score = 0;
 			main();
 		}
 
@@ -452,14 +454,17 @@ void gamefn(int pacman_speed)
 		else pacSprite.move(Besh_x, Besh_y);
 		pacman.clear();
 
-		if (fright == 0)
+		if (fright == 0) 
+		{
 			blinkySprite = blinky.findpath(pacSprite, blinkySprite);
+			pinky.short_with_tiles(pacSprite, pinkSprite);
+			Inky(inkySprite, 2);
+			clyde.pinky_ran_move(clydeSprite, maze1, 2);
+		}
 		else
 			fright--;
 
-		pinky.short_with_tiles(pacSprite, pinkSprite);
-		Inky(inkySprite, 2);
-		clyde.pinky_ran_move(clydeSprite, maze1, 2);
+
 
 		for (int i = 0; i < rows; i++)
 			for (int j = 0; j < cols; j++)
@@ -511,6 +516,7 @@ void gamefn(int pacman_speed)
 
 			if (map_path[8]<'3')
 			{
+				Return_game_to_the_start();
 				map_path[8]++;
 				declare();
 			}
