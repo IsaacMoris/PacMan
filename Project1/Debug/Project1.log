@@ -1,47 +1,25 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(411,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Source.cpp
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(220): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(389): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(390): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(392): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(393): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(395): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(402): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(410): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(425): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(440): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(444): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(451): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(464): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(602): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(609): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(615): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Project1.vcxproj -> C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Debug\Pacman.exe
+d:\pacman\project1\source.cpp(233): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+d:\pacman\project1\source.cpp(416): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\pacman\project1\source.cpp(417): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\pacman\project1\source.cpp(419): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\pacman\project1\source.cpp(420): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\pacman\project1\source.cpp(422): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+d:\pacman\project1\source.cpp(429): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\pacman\project1\source.cpp(437): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\pacman\project1\source.cpp(452): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\pacman\project1\source.cpp(467): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\pacman\project1\source.cpp(471): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\pacman\project1\source.cpp(478): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\pacman\project1\source.cpp(491): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\pacman\project1\source.cpp(659): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\pacman\project1\source.cpp(666): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\pacman\project1\source.cpp(672): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\pacman\project1\source.cpp(723): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+d:\pacman\project1\source.cpp(728): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+d:\pacman\project1\source.cpp(740): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+d:\pacman\project1\source.cpp(820): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(1193,5): warning MSB8030: The linker switch "Minimum Required Version" requires "SubSystem" to be set.  Without "SubSystem", the "Minimum Required Version" would not be passed to linker and could prevent to the output binary from running on older Operating Systems.
+  Project1.vcxproj -> D:\PacMan\Debug\Pacman.exe
+  Project1.vcxproj -> D:\PacMan\Debug\Pacman.pdb (Partial PDB)

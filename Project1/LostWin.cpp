@@ -19,14 +19,14 @@ LostWin::LostWin()
 	losttext.setFont(font);
 	losttext.setString("You Lost");
 	losttext.setCharacterSize(100);
-	losttext.setPosition(200, 270);
+	losttext.setPosition(620, 400);
 	losttext.setFillColor(Color::Blue);
 	losttext.setStyle(Text::Style::Bold);
 
 	wintext.setFont(font);
 	wintext.setString("You Win");
 	wintext.setCharacterSize(100);
-	wintext.setPosition(200, 270);
+	wintext.setPosition(620, 400);
 	wintext.setFillColor(Color::Blue);
 	wintext.setStyle(Text::Style::Bold);
 

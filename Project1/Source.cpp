@@ -17,15 +17,21 @@ scoreboard score_board;
 int maze1[50][50];
 
 int score = 0;//Abnb
+int total_score = 0; // Besh
 int lives = 3;//Abnb
 bool mood = false;   //Mood --> Chase
 bool Abnb_check1 = false;
 bool Abnb_check2 = false;
-
+string map_path = "maps/map1.txt";
 int const rows = 28;
 int const cols = 28;
 int Dir = 0, cnt = 0, fright = 0;
-bool vary = 0;
+bool vary = 0 , haha = 1;
+
+// inky--//
+int olix = 0, oliy = -2;
+int inky_cnt = 0;
+//------------//
 Texture backGround, pac, wall, blinky, dot, bigdot, pink;
 Sprite  backGroundsprite, pacSprite, wallSprite, blinkySprite, dotSprite, bigdotSprite, pinkSprite;
 
@@ -51,6 +57,8 @@ void gamefn(int pacman_speed);
 void scoreBoardfn();
 void draw_your_maze();
 
+void Inky(Sprite &oli, int speed);
+
 void Return_game_to_the_start();
 
 int main()
@@ -63,11 +71,16 @@ int main()
 void declare()
 {
 	fstream inputStream;
-	inputStream.open("maps/map1.txt");
+	inputStream.open(map_path);
 	for (int i = 0; i < rows; i++)
 		for (int j = 0; j < cols; j++)
+		{
 			inputStream >> maze1[i][j];
-
+			if (maze1[i][j] == 2)//Besh
+				total_score += 10;
+			else if (maze1[i][j] == 3)//Besh
+				total_score += 50;
+		}
 
 	backGround.loadFromFile("img/startbackground.jpg");              // BackGround
 	backGroundsprite.setTexture(backGround);
@@ -346,6 +359,20 @@ void gamefn(int pacman_speed)
 			}
 		}
 
+		if (!lives)	//Besh
+		{
+			RenderWindow lost(VideoMode(1600, 900), "Oops !");
+			oo.soundlost();
+			oo.lost(lost);
+			lost.display();
+			pacman.close();
+			sleep(seconds(3));
+			lost.close();
+			lives = 3;
+			map_path = "maps/map1.txt";
+			main();
+		}
+
 		cnt = (cnt + 1) % 7;
 
 		
@@ -431,7 +458,7 @@ void gamefn(int pacman_speed)
 			fright--;
 
 		pinky.short_with_tiles(pacSprite, pinkSprite);
-		inky.pinky_ran_move(inkySprite, maze1, 2);
+		Inky(inkySprite, 2);
 		clyde.pinky_ran_move(clydeSprite, maze1, 2);
 
 		for (int i = 0; i < rows; i++)
@@ -473,6 +500,35 @@ void gamefn(int pacman_speed)
 				}
 
 			}
+
+		/*
+		Besh
+		*/
+		// move to next level || end
+		if (total_score == score)
+		{
+			sleep(seconds(1));
+
+			if (map_path[8]<'3')
+			{
+				map_path[8]++;
+				declare();
+			}
+
+			else
+			{
+				RenderWindow win(VideoMode(1600, 900), "Congratulations !");
+				oo.winningsound();
+				oo.win(win);
+				win.display();
+				pacman.close();
+				sleep(seconds(3));
+				win.close();
+				lives = 3;
+				declare();
+				
+			}
+		}
 		pacman.draw(blinkySprite);
 		pacman.draw(pinkSprite);
 		pacman.draw(inkySprite);
@@ -574,6 +630,7 @@ void draw_your_maze()
 				for (int i = 0; i < rows; i++)
 					for (int j = 0; j < cols; j++)
 						maze1[i][j] = drawmaze[i][j];
+
 				window.close();
 				startfn();
 			}
@@ -617,7 +674,6 @@ void draw_your_maze()
 				}
 			}
 
-
 		window.draw(blinkySprite);
 		window.draw(pinkSprite);
 		window.draw(inkySprite);
@@ -659,6 +715,111 @@ void Return_game_to_the_start()
 	sleep(seconds(1));
 
 }
+
+
+//-----------------------inky-----------------------------------------//
+int ghostx(Sprite &oli, int Next_Moving)
+{
+	return (oli.getPosition().y + Next_Moving) / 32;
+}
+
+int ghosty(Sprite &oli, int Next_Moving)
+{
+	return (oli.getPosition().x + Next_Moving) / 32;
+}
+
+void Inky(Sprite &oli, int speed)
+{
+
+	inky_cnt++;
+	if (inky_cnt % 5 == 0)
+		haha = haha || rand() % 3;
+	int x = ghostx(oli, oliy + pac_diffPOS(oliy, speed));
+	int y = ghosty(oli, olix + pac_diffPOS(olix, speed));
+
+	int currX = oli.getPosition().y, currY = oli.getPosition().x;
+
+	if ((maze1[x][y] == 1 || cnt % 25 == 0) && ((currX % 32 == 0) && (currY % 32 == 0)))
+	{
+
+
+		if ((olix > 0 || olix < 0) && oliy == 0) //right and left
+		{
+			if (haha)
+			{
+				if (maze1[ghostx(oli, -32)][ghosty(oli, 0)] != 1) //up
+					olix = 0, oliy = -speed;
+
+				else if (maze1[ghostx(oli, 32)][ghosty(oli, 0)] != 1) // down
+					olix = 0, oliy = speed;
+
+				else if (maze1[ghostx(oli, 0)][ghosty(oli, 32)] != 1) //right
+					olix = speed, oliy = 0;
+
+				else if (maze1[ghostx(oli, 0)][ghosty(oli, -32)] != 1) //left
+					olix = -speed, oliy = 0;
+
+			}
+			else
+			{
+				if (maze1[ghostx(oli, 32)][ghosty(oli, 0)] != 1) // down
+					olix = 0, oliy = speed;
+
+				else if (maze1[ghostx(oli, -32)][ghosty(oli, 0)] != 1) //up
+					olix = 0, oliy = -speed;
+
+				else if (maze1[ghostx(oli, 0)][ghosty(oli, -32)] != 1) //left
+					olix = -speed, oliy = 0;
+
+				else if (maze1[ghostx(oli, 0)][ghosty(oli, 32)] != 1) //right
+					olix = speed, oliy = 0;
+
+			}
+		}
+		else if ((oliy > 0 || oliy < 0) && olix == 0)  // up and down	
+		{
+			if (haha)
+
+			{
+				if (maze1[ghostx(oli, 0)][ghosty(oli, 32)] != 1) //right
+					olix = speed, oliy = 0;
+
+				else if (maze1[ghostx(oli, 0)][ghosty(oli, -32)] != 1) //left
+					olix = -speed, oliy = 0;
+
+				else if (maze1[ghostx(oli, -32)][ghosty(oli, 0)] != 1) //up
+					olix = 0, oliy = -speed;
+
+				else if (maze1[ghostx(oli, 32)][ghosty(oli, 0)] != 1) // down
+					olix = 0, oliy = speed;
+
+			}
+			else
+			{
+
+				if (maze1[ghostx(oli, 0)][ghosty(oli, -32)] != 1) //left
+					olix = -speed, oliy = 0;
+
+				else if (maze1[ghostx(oli, 0)][ghosty(oli, 32)] != 1) //right
+					olix = speed, oliy = 0;
+
+				else if (maze1[ghostx(oli, 32)][ghosty(oli, 0)] != 1) // down
+					olix = 0, oliy = speed;
+
+				else if (maze1[ghostx(oli, -32)][ghosty(oli, 0)] != 1) //up
+					olix = 0, oliy = -speed;
+
+			}
+
+		}
+
+	}
+	haha = (haha) ? 0 : 1;
+	inky_cnt += rand() % 10;
+	inky_cnt %= (1000000000 + 7);
+	oli.move(olix, oliy);
+}
+
 void enterusernamefn()
 {
 	RenderWindow username(VideoMode(1600, 900), "Enter your name");
