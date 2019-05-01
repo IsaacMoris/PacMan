@@ -5,12 +5,16 @@
 #include "setting.h"
 #include "ghostmoving.h"
 #include "ShortestRandom.h"
+#include "scoreboard.h"
 #include "pinky.h"
 #include "LostWin.h"
 #include <SFML/Window.hpp>
 #include <string>
 using namespace sf;
 using namespace std;
+
+ifstream is;
+scoreboard score_board(is, "Score/Score.txt");
 
 int maze1[50][50];
 
@@ -36,9 +40,14 @@ void declare();
 void detectdirection(int x, int y);
 void playeranimation(int dir, int cnt);
 int pac_diffPOS(int curr_pac_speed, int pacman_speed);
+void scoreBoardfn();
+
 void settingfn();
 void startfn();
 void gamefn(int pacman_speed);
+
+void Return_game_to_the_start() ;
+
 int main()
 {
 	declare();
@@ -57,7 +66,7 @@ void declare()
 	backGround.loadFromFile("img/startbackground.jpg");              // BackGround
 	backGroundsprite.setTexture(backGround);
 	backGroundsprite.setTextureRect(IntRect(0, 0, 1600, 900));
-	backGroundsprite.setColor(Color(255, 255, 255, 64));
+	backGroundsprite.setColor(Color(255, 255, 255, 64)); //255 64
 
 
 
@@ -80,7 +89,7 @@ void declare()
 	bigdotSprite.setTexture(bigdot);
 
 
-	wall.loadFromFile("img/wall.png");                              // Wall
+	wall.loadFromFile("img/wall.jpg");                              // Wall
 	wallSprite.setTexture(wall);
 
 	pac.loadFromFile("img/sheet.png");                            // PacmMan
@@ -110,12 +119,44 @@ void declare()
 	clydeSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 }
 
+/*void scoreBoardfn()
+{
+	RenderWindow Score_Screen(sf::VideoMode(1600, 900), "Score Board");
+
+	while (Score_Screen.isOpen())
+	{
+		Event event;
+		while (Score_Screen.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				Score_Screen.close();
+
+			else if (event.text.unicode == 27) //27 Esc button
+			{
+				Score_Screen.close();
+				settingfn();
+				break;
+			}
+		}
+		Score_Screen.clear();
+		score_board.Print_Score_Board(Score_Screen);
+		//Score_Screen.display();
+	}
+}*/
+
 void startfn()
 {
+
+	/*RenderWindow username(VideoMode(1600, 900), "Enter your name");
+	while (username.isOpen())
+	{
+		Event event;
+
+		while (username.pollEvent(event)) 
+			score_board.Keyboard_Handling(event, username);
+	}*/
 	RenderWindow startScreen(sf::VideoMode(1600, 900), "Pacman", Style::Close | Style::Resize);
 	Menu menu(startScreen.getSize().x, startScreen.getSize().y);
-
-
 	while (startScreen.isOpen())
 	{
 		Event event;
@@ -171,8 +212,8 @@ void startfn()
 
 
 		startScreen.clear();
-		startScreen.draw(backGroundsprite);
 		menu.draw(startScreen);
+		startScreen.draw(backGroundsprite);
 		startScreen.display();
 	}
 
@@ -206,6 +247,8 @@ void settingfn()
 						cout << "You pressed controls" << endl;
 						break;
 					case 1:
+					//	settingScreen.close();
+						//scoreBoardfn();
 						cout << "you prssed leader board" << endl;
 						break;
 					case 2:
@@ -231,7 +274,10 @@ void settingfn()
 int pac_diffPOS(int curr_pac_speed, int pacman_speed)
 {
 	int diff = 0;
-	if (curr_pac_speed > 0)  diff = 32 - pacman_speed; else if (curr_pac_speed < 0)  diff = -32 + pacman_speed; else diff = 0;
+	if (curr_pac_speed > 0)  diff = 32 - pacman_speed; 
+	else if (curr_pac_speed < 0)  diff = -32 + pacman_speed;
+	else diff = 0;
+
 	return diff;
 }
 
@@ -256,26 +302,35 @@ void gamefn(int pacman_speed)
 		if (pacSprite.getGlobalBounds().intersects(blinkySprite.getGlobalBounds()))
 		{
 			if (!mood)      //Mood --> Chase  
+			{
 				lives--;
+				Return_game_to_the_start();
+			}
 
 		}
 		if (pacSprite.getGlobalBounds().intersects(pinkSprite.getGlobalBounds()))
 		{
 			if (!mood)     //Mood --> Chase 
+			{
 				lives--;
-
+				Return_game_to_the_start();
+			}
 		}
 		if (pacSprite.getGlobalBounds().intersects(inkySprite.getGlobalBounds()))
 		{
 			if (!mood)      //Mood --> Chase 
+			{
 				lives--;
-
+				Return_game_to_the_start();
+			}
 		}
 		if (pacSprite.getGlobalBounds().intersects(clydeSprite.getGlobalBounds()))
 		{
 			if (!mood)      //Mood --> Chase 
+			{
 				lives--;
-
+				Return_game_to_the_start();
+			}
 		}
 
 		cnt = (cnt + 1) % 7;
@@ -486,4 +541,16 @@ void detectdirection(int x, int y)
 		Dir = 1;
 	if (y == -2)
 		Dir = 3;
+}
+void Return_game_to_the_start()
+{
+	pacSprite.setPosition(Vector2f(32, 32));
+
+	blinkySprite.setPosition(Vector2f(448, 448));
+	pinkSprite.setPosition(Vector2f(480, 448));								
+	inkySprite.setPosition(Vector2f(512, 448));
+	clydeSprite.setPosition(Vector2f(416, 448));
+	
+	sleep(seconds(1)); 
+
 }

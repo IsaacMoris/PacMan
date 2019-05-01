@@ -11,10 +11,11 @@ using namespace std;
 using namespace sf;
 
 
-scoreboard::scoreboard(ifstream& st, string path)
+scoreboard::scoreboard(ifstream& st , string path)
 {
 
 	//--------- Read score from file --------------------//
+	file_path = path;
 	st.open(path);
 	if (st.fail())
 	{
@@ -76,21 +77,27 @@ void scoreboard::Keyboard_Handling(Event& event, RenderWindow& window)
 		else if (event.text.unicode == 13)
 		{
 			Score[sentence];
+			window.close();
 		}
-
-		User_Input.setString(sentence);
 	}
+		Text_Style(User_Name, 250,400, "User Name :", Color::Yellow, 60);
+		Text_Style(User_Input, 650, 400 , sentence, Color::White, 55);
+		User_Input.setString(sentence);
+		User_Name.setString("User Name :");
+		window.clear();
+	window.draw(User_Name);
+	window.draw(User_Input);
+	window.display();
 }
 
 
 void scoreboard::Print_Score_Board(RenderWindow& window)
 {
-	float x = 150.0, y = 0;
+	float x = 600.0, y = 0;
 
 	Text_Style(Desplay_Score_Word, x, y, "Score", Color::White, 100);
 
-
-	x = 0.0; y = 120.0;
+	x = 570.0; y = 120.0;
 	for (i = size - 1; i >= 0; i--, y += 90)
 	{
 		if (Sorted_Score[i].second == "")
@@ -101,11 +108,25 @@ void scoreboard::Print_Score_Board(RenderWindow& window)
 		Text_Style(Desplay_Name, x, y, Sorted_Score[i].second, Color::Yellow, 60);
 		Text_Style(Desplay_Score, x + 250, y, convert, Color::Green, 45);
 
-
 		window.draw(Desplay_Score_Word);
 		window.draw(Desplay_Name);
 		window.draw(Desplay_Score);
 		//window.display();
 	}
 
+}
+
+
+void scoreboard :: Save_Score_Board(int finale_score)
+{
+
+	if (Score[sentence] < finale_score)
+		Score[sentence] = finale_score;
+	ofstream of;
+	of.open(file_path);
+	of.clear();
+	it = Score.begin();
+	for (; it != Score.end(); it++)
+		of << it->first << " " << it->second<<endl;
+	of.close();
 }

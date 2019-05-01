@@ -14,6 +14,8 @@ public:
 
 	void Print_Score_Board(RenderWindow& window);
 
+	void  Save_Score_Board(int finale_score);
+
 public:
 	Text User_Input, User_Name;
 	Font font1;  string sentence;
@@ -26,4 +28,5 @@ private:
 	int i = 0;
 	Text Desplay_Score_Word, Desplay_Name, Desplay_Score;
 	string convert;
+	string file_path;
 };
