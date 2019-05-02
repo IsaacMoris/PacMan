@@ -25,11 +25,11 @@ void Besh_Random::pinky_ran_move(Sprite & pink, int map[][50], int speed)
 {
 	int xmod = pink.getPosition().y, ymod = pink.getPosition().x;
 
-	int incx = 0, incy = 0;
-	if (pinkyx > 0) incx = 32 - speed; else if (pinkyx < 0) incx = -32 + speed; else incx = 0;
-	if (pinkyy > 0) incy = 32 - speed; else if (pinkyy < 0) incy = -32 + speed; else incy = 0;
-	int pinky_x = p_x(pinkyy + incy, pink);
-	int pinky_y = p_y(pinkyx + incx, pink);
+	int  Nextx = 0, Nexty = 0;
+	if (pinkyx > 0) Nextx = 32; else if (pinkyx < 0) Nextx = -32; else  Nextx = 0;
+	if (pinkyy > 0) Nexty = 32; else if (pinkyy < 0) Nexty = -32; else Nexty = 0;
+	int pinky_x = p_x(Nexty, pink);
+	int pinky_y = p_y(Nextx, pink);
 	int random = rand() % 20 + 1;
 	//srand(10);
 

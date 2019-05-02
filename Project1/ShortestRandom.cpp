@@ -7,7 +7,7 @@ using namespace sf;
 using namespace std;
 
 
-ShortestRandom::ShortestRandom(int arr[][50], int a, int b ,int ghostspeed)
+ShortestRandom::ShortestRandom(int arr[][50], int a, int b, int ghostspeed)
 {
 	speed = ghostspeed;
 	width = a;
@@ -84,7 +84,7 @@ Sprite ShortestRandom::findpath(Sprite player, Sprite ghost)
 			}
 		}
 	}
-	
+
 
 	if (player.getPosition().x == ghost.getPosition().x && player.getPosition().y == ghost.getPosition().y
 		&& (aa / 32 * 32 == aa) && (bb / 32 * 32 == bb))
@@ -111,7 +111,7 @@ Sprite ShortestRandom::findpath(Sprite player, Sprite ghost)
 }
 
 
-int ShortestRandom::p_x(int pos, Sprite& pink)
+int ShortestRandom::p_x(int pos, Sprite & pink)
 {
 	return (pink.getPosition().y + pos) / 32;
 }
@@ -126,11 +126,11 @@ void ShortestRandom::pinky_ran_move(Sprite & pink)
 {
 	int xmod = pink.getPosition().y, ymod = pink.getPosition().x;
 
-	int incx = 0, incy = 0;
-	if (ghostx > 0) incx = 32 - speed; else if (ghostx < 0) incx = -32 + speed; else incx = 0;
-	if (ghosty > 0) incy = 32 - speed; else if (ghosty < 0) incy = -32 + speed; else incy = 0;
-	int pinky_x = p_x(ghosty + incy, pink);
-	int pinky_y = p_y(ghostx + incx, pink);
+	int  Nextx = 0, Nexty = 0;
+	if (ghostx > 0) Nextx = 32; else if (ghostx < 0) Nextx = -32; else  Nextx = 0;
+	if (ghosty > 0) Nexty = 32; else if (ghosty < 0) Nexty = -32; else Nexty = 0;
+	int pinky_x = p_x(Nexty, pink);
+	int pinky_y = p_y(Nextx, pink);
 	int random = rand() % 20 + 1;
 	//srand(10);
 
@@ -217,10 +217,10 @@ void ShortestRandom::pinky_ran_move(Sprite & pink)
 	cn %= 1000000000 + 7;
 }
 
-void ShortestRandom::short_with_tiles(Sprite pac, Sprite& ghost)
+void ShortestRandom::short_with_tiles(Sprite pac, Sprite & ghost)
 {
 
-	if (moving_switch % 100<=50)
+	if (moving_switch % 100 <= 50)
 	{
 
 		ghost = findpath(pac, ghost);
@@ -232,7 +232,7 @@ void ShortestRandom::short_with_tiles(Sprite pac, Sprite& ghost)
 	}
 	else
 	{
-		
+
 		pinky_ran_move(ghost);
 		moving_switch++;
 	}

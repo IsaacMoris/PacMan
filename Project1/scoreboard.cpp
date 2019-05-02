@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <fstream>
 #include <functional>   // std::greater
+#include <ostream>      // std::flush
 using namespace std;
 using namespace sf;
 
@@ -26,7 +27,14 @@ scoreboard::scoreboard()
 	while (!scoreIn.eof())
 	{
 		pair<string, int > name_and_score;
-		scoreIn >> name_and_score.first >> name_and_score.second;
+		scoreIn >> name_and_score.first;
+		if (scoreIn.fail() || name_and_score.first[0]=='0')
+			scoreIn >> name_and_score.first;
+
+		scoreIn>> name_and_score.second;
+		if(scoreIn.fail())
+			scoreIn >> name_and_score.second;
+		//	scoreIn >> name_and_score.first >> name_and_score.second;
 		Score[name_and_score.first] = name_and_score.second;
 
 	}
@@ -43,6 +51,13 @@ scoreboard::scoreboard()
 	}
 
 	sort(Sorted_Score, Sorted_Score + size);
+	Score.clear();
+	for (int i=0 ; i<size ;  i++)
+	{
+		Score[Sorted_Score[i].second] = Sorted_Score[i].first;
+		//Sorted_Score[i].first = it->second;
+		//Sorted_Score[i].second = it->first;
+	}
 }
 
 
@@ -69,10 +84,10 @@ void scoreboard::Keyboard_Handling(Event& event, RenderWindow& window)
 		if (event.text.unicode >= 32 && event.text.unicode <= 126)
 			sentence += (char)event.text.unicode;
 
-		else if (event.text.unicode == 8 && sentence.length() > 0)
+		 if ((event.text.unicode == 8  && sentence.length() > 0) || Keyboard::isKeyPressed(Keyboard::Space))
 			sentence.erase(sentence.length() - 1, 1);
 
-		else if (event.text.unicode == 13)
+		 if (event.text.unicode == 13 && sentence.length()>0 && sentence.length()<15)
 		{
 			Score[sentence]=max(Score[sentence],0);
 			window.close();
@@ -95,7 +110,7 @@ void scoreboard::Print_Score_Board(RenderWindow& window)
 
 	Text_Style(Desplay_Score_Word, x, y, "Score", Color::White, 100);
 
-	x = 570.0; y = 120.0;
+	x = 470.0; y = 120.0;
 	window.draw(Desplay_Score_Word);
 	for (i = size - 1; i >= 0; i--, y += 90)
 	{
@@ -105,7 +120,7 @@ void scoreboard::Print_Score_Board(RenderWindow& window)
 		convert = to_string(Sorted_Score[i].first);
 
 		Text_Style(Desplay_Name, x, y, Sorted_Score[i].second, Color::Yellow, 60);
-		Text_Style(Desplay_Score, x + 250, y, convert, Color::Green, 45);
+		Text_Style(Desplay_Score, x + 400, y, convert, Color::Green, 45);
 
 		window.draw(Desplay_Name);
 		window.draw(Desplay_Score);
@@ -124,8 +139,8 @@ void scoreboard :: Save_Score_Board(int finale_score)
 	it = Score.begin();
 	for (; it != Score.end(); it++)
 	{
-		cout << it->first << " " << it->second << endl;
-		scoreOut << it->first << " " << it->second << endl;
+		//cout << it->first << " " << it->second << endl;
+		scoreOut << it->first << " " << it->second << " ";
 	}
 	scoreOut.close();
 
