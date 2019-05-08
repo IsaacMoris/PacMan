@@ -23,8 +23,7 @@ Game :
 Esc – Quite the Game . 
 P – Pause /UnPause the Game . 
 M- Mute /UnMute the sound . 
-## Notes 
-This Game is developed by a team in Ain-Shams University in Egypt.
+
 ## Developers List
 
 | Name             | 
