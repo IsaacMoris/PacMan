@@ -26,11 +26,11 @@ M- Mute /UnMute the sound .
 
 ## Developers List
 
-| Name             | 
-| ---------------- |
-| Isaac Moris      |
-| Beshoy Hani      |
-| Oliver Ayman     |
-| Abanoub Asaad    |
+| Name             | Account                                                      |
+| ---------------- | ------------------------------------------------------------ |
+| Isaac Moris      | [@IsaacMo12](https://github.com/IsaacMo12)                   |
+| Beshoy Hani      | [@BeshoyHani](https://github.com/BeshoyHani)                 |
+| Oliver Ayman     | [@oliverayman7](https://github.com/oliverayman7)             |
+| Abanoub Asaad    | [@Abanoub-Asaad](https://github.com/Abanoub-Asaad)           |
 | David Maged      |
 | Amir Kamal       |
