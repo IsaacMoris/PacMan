@@ -1,3 +1,4 @@
+[![HitCount](http://hits.dwyl.io/IsaacMo12/PacMan.svg)](http://hits.dwyl.io/IsaacMo12/PacMan)
 
 ## PacMan
 # PacMan in C++ using Sfml . 
