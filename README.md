@@ -1,5 +1,5 @@
 
-#PacMan
+## PacMan
 #PacMan in C++ using Sfml . 
 #How to play :
 #The aim of pacman is to eat all the dots to advance to the next level, without being caught by the ghosts. 
