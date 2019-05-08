@@ -33,5 +33,5 @@ This Game is developed by a team in Ain-Shams University in Egypt.
 | Beshoy Hani      |
 | Oliver Ayman     |
 | Abanoub Asaad    |
-| Oliver Ayman     |
+| David Maged      |
 | Amir Kamal       |
