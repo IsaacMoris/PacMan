@@ -11,8 +11,9 @@ Otherwise, if Pac-Man encounters a ghost he will lose a life.
 
 The game consists of three livels . 
 ## Additions 
-The user can draw any maze and play it .
-PacMan can shoot fires from his mouth . 
+The user can draw any maze and play it.
+<br/>
+PacMan can shoot fires from his mouth. 
 # Controls 
 Movement : 
 
