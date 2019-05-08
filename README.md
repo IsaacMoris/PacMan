@@ -1,7 +1,7 @@
 
- PacMan 
+PacMan /n
 PacMan in C++ using Sfml . 
-How to play 
+How to play :
 The aim of pacman is to eat all the dots to advance to the next level, without being caught by the ghosts. 
 
 If Pac-Man eats a super dot the ghosts will turn frightened and Pac-Man will be able to eat them to gain bonus points. 
