@@ -17,12 +17,13 @@ scoreboard score_board;
 int maze1[50][50];
 int dead = true;
 int score = 0;//Abnb
-int total_score = 0; // Besh
+
+bool win=false;
 int lives = 3;//Abnb
 bool mood = false;   //Mood --> Chase
 bool Abnb_check1 = false;
 bool Abnb_check2 = false;
-string map_path = "maps/map2.txt";
+string map_path = "maps/map1.txt";
 int const rows = 28;
 int const cols = 28;
 int Dir = 0, cnt = 0, fright = 0;
@@ -63,7 +64,7 @@ void Return_game_to_the_start();
 int User_Check = 1;
 int main()
 {
-	total_score = score = 0;
+	 score = 0;
 	declare();
 	if (User_Check)////////////////score
 
@@ -83,10 +84,7 @@ void declare()
 		for (int j = 0; j < cols; j++)
 		{
 			inputStream >> maze1[i][j];
-			if (maze1[i][j] == 2)//Besh
-				total_score += 10;
-			else if (maze1[i][j] == 3)//Besh
-				total_score += 50;
+			
 		}
 
 	backGround.loadFromFile("img/startbackground.jpg");              // BackGround
@@ -457,7 +455,7 @@ void gamefn(int pacman_speed)
 	Besh_Random inky, clyde;
 	Inky_Ghost ink; // struct
 	int xx = 0, yy = 0;
-	pacman.setFramerateLimit(100);
+
 	// Besh
 	bool move_ch = 1; int Besh_x = 0, Besh_y = 0 ;
 	while (pacman.isOpen())
@@ -478,7 +476,7 @@ void gamefn(int pacman_speed)
 				if (eatghost.getStatus() == Music::Status::Stopped)
 					eatghost.play();
 				score += 200;
-				total_score += 200;
+
 				sleep(seconds(1));
 			}
 
@@ -497,7 +495,7 @@ void gamefn(int pacman_speed)
 				if (eatghost.getStatus() == Music::Status::Stopped)
 					eatghost.play();
 				score += 200;
-				total_score += 200;
+
 				sleep(seconds(1));
 			}
 		}
@@ -515,7 +513,7 @@ void gamefn(int pacman_speed)
 				if (eatghost.getStatus() == Music::Status::Stopped)
 					eatghost.play();
 				score += 200;
-				total_score += 200;
+
 				sleep(seconds(1));
 			}
 		}
@@ -533,7 +531,7 @@ void gamefn(int pacman_speed)
 				if (eatghost.getStatus() == Music::Status::Stopped)
 				eatghost.play();
 				score += 200;
-				total_score += 200;
+
 				sleep(seconds(1));
 			}
 		}
@@ -550,11 +548,11 @@ void gamefn(int pacman_speed)
 			lives = 3;
 			map_path = "maps/map1.txt";
 			score = 0;
-			total_score = 0;
+
 			main();
 		}
 
-		cnt = (cnt + 1) % 7;
+		cnt = (cnt + 1) % 21;
 
 
 		s = to_string(score);
@@ -639,7 +637,7 @@ void gamefn(int pacman_speed)
 		clyde.pinky_ran_move(clydeSprite, maze1, 2);
 
 
-
+		win = true;
 		for (int i = 0; i < rows; i++)
 			for (int j = 0; j < cols; j++)
 			{
@@ -652,6 +650,7 @@ void gamefn(int pacman_speed)
 				}
 				else if (maze1[i][j] == 2)
 				{
+					win = false;
 					dotSprite.setTextureRect(IntRect(0, 0, 16, 16));
 					dotSprite.setColor(Color::Red);
 					dotSprite.setPosition(j * 32 + 8, i * 32 + 8);
@@ -684,7 +683,7 @@ void gamefn(int pacman_speed)
 		Besh
 		*/
 		// move to next level || end
-		if (total_score == score)
+		if (win==true)
 		{
 			sleep(seconds(1));
 
@@ -888,7 +887,7 @@ void draw_your_maze()
 }
 void playeranimation(int dir, int cnt)
 {
-	pacSprite.setTextureRect(IntRect(cnt * 32, dir * 32, 32, 32));
+	pacSprite.setTextureRect(IntRect(cnt/3 * 32, dir * 32, 32, 32));
 }
 
 void detectdirection(int x, int y)

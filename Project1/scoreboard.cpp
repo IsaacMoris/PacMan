@@ -87,7 +87,7 @@ void scoreboard::Keyboard_Handling(Event& event, RenderWindow& window)
 		 if ((event.text.unicode == 8  && sentence.length() > 0) || Keyboard::isKeyPressed(Keyboard::Space))
 			sentence.erase(sentence.length() - 1, 1);
 
-		 if (event.text.unicode == 13 && sentence.length()>0 && sentence.length()<15)
+		 if (Keyboard::isKeyPressed(Keyboard::Enter) && sentence.length()>0 && sentence.length()<15)
 		{
 			Score[sentence]=max(Score[sentence],0);
 			window.close();
