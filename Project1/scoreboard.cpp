@@ -90,6 +90,7 @@ void scoreboard::Keyboard_Handling(Event& event, RenderWindow& window)
 		 if (Keyboard::isKeyPressed(Keyboard::Enter) && sentence.length()>0 && sentence.length()<15)
 		{
 			Score[sentence]=max(Score[sentence],0);
+			if(Event::KeyReleased)
 			window.close();
 		}
 	}
