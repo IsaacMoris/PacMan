@@ -1,63 +1,63 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(411,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Source.cpp
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(264): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(258): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(269): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(263): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(281): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(275): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(361): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(369): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(355): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(363): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(594): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(583): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(595): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(584): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(597): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(586): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(598): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(587): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(600): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(589): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(607): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(615): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(630): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(646): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(596): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(604): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(619): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(635): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(650): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(657): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(670): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(861): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(868): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(874): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(639): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(647): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(661): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(853): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(860): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Project1\Source.cpp(866): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Project1.vcxproj -> C:\Users\isaac\OneDrive\Documents\GitHub\PacMan\Debug\Pacman.exe
