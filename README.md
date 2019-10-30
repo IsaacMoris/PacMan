@@ -28,7 +28,7 @@ M- Mute /UnMute the sound .
 
 | Name             | Account                                                      |
 | ---------------- | ------------------------------------------------------------ |
-| Isaac Moris      | [@IsaacMo12](https://github.com/IsaacMo12)                   |
+| Isaac Moris      | [@IsaacMoris](https://github.com/IsaacMo12)                   |
 | Beshoy Hani      | [@BeshoyHani](https://github.com/BeshoyHani)                 |
 | Oliver Ayman     | [@oliverayman7](https://github.com/oliverayman7)             |
 | Abanoub Asaad    | [@Abanoub-Asaad](https://github.com/Abanoub-Asaad)           |
