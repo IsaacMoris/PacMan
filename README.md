@@ -13,7 +13,6 @@ The game consists of three livels .
 ## Additions 
 The user can draw any maze and play it.  (Has been added) :heavy_check_mark:
 <br/>
-PacMan can shoot fires from his mouth.   (will be added soon) :x:
 # Controls 
 Movement : 
 
