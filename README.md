@@ -31,5 +31,5 @@ M- Mute /UnMute the sound .
 | Beshoy Hani      | [@BeshoyHani](https://github.com/BeshoyHani)                 |
 | Oliver Ayman     | [@oliverayman7](https://github.com/oliverayman7)             |
 | Abanoub Asaad    | [@Abanoub-Asaad](https://github.com/Abanoub-Asaad)           |
-| David Maged      |
+| David Maged      |[@Davidmaged171](https://github.com/DavidMaged171)
 | Amir Kamal       |
